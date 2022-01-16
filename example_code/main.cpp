@@ -20,9 +20,9 @@ struct Custom : Object {
 
 #include <NDSA/Main.hh>
 void NDSA::Game() {
-	Custom *custom = new Custom();\
+  Custom *custom = new Custom();
 
-	consoleDemoInit();
+  consoleDemoInit();
 
   std::cout << SCREEN(0,5) << "NDSA is awesome!";
 
