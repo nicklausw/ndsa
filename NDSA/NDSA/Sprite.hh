@@ -12,6 +12,8 @@ namespace NDSA {
     SpriteSize SprSize;
     SpriteColorFormat ColorFormat;
     
+    #define SpriteData(x) x ## Tiles, x ## TilesLen, x ## Pal, x ## PalLen
+
     Sprite(TileData *Tiles, int TileLen, PaletteData *Palette, int PalLen,
      SpriteSize nSprSize, SpriteColorFormat nColorFormat) : SprSize(nSprSize), ColorFormat(nColorFormat) {
       

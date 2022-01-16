@@ -40,14 +40,13 @@ struct Player : Object {
 #include <NDSA/Main.hh>
 void NDSA::Game() {
   Custom *custom = new Custom();
-  Sprite *manSprite = new Sprite(manTiles, manTilesLen,
-                                 manPal, manPalLen,
+  Sprite *manSprite = new Sprite(SpriteData(man),
                                  SpriteSize_32x32,
                                  SpriteColorFormat_256Color);
   Player *player = new Player(manSprite, 150, 50, TopScreen);
 
   consoleDemoInit();
-  Background.Set(testImageBitmap, testImagePal, TopScreen);
+  Background.Set(BackgroundData(testImage), TopScreen);
 
   std::cout << SCREEN(0,5) << "NDSA is awesome!";
   std::cout << SCREEN(0,6) << "Move the guy with the D-pad.";
