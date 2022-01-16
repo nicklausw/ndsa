@@ -8,13 +8,13 @@ namespace NDSA {
       BGDataSub = bgInitSub(3, BgType_Bmp16, BgSize_B8_256x256, 0,0);
     }
     
-    void Set(TileData *Bitmap, PaletteData *Palette, int BitmapSize, int PalSize, NDSA_Screen BGScreen) {
+    void Set(TileData *Bitmap, PaletteData *Palette, NDSA_Screen BGScreen) {
       if (BGScreen == TopScreen) {
-        dmaCopy(Bitmap, bgGetGfxPtr(BGData), BitmapSize);
-        dmaCopy(Palette, BG_PALETTE, PalSize);
+        dmaCopy(Bitmap, bgGetGfxPtr(BGData), 256*256);
+        dmaCopy(Palette, BG_PALETTE, 256*2);
       } else {
-        dmaCopy(Bitmap, bgGetGfxPtr(BGDataSub), BitmapSize);
-        dmaCopy(Palette, BG_PALETTE_SUB, PalSize);
+        dmaCopy(Bitmap, bgGetGfxPtr(BGDataSub), 256*256);
+        dmaCopy(Palette, BG_PALETTE_SUB, 256*2);
       }
     };
   } Background;

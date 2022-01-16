@@ -15,6 +15,7 @@ include $(DEVKITARM)/ds_rules
 # INCLUDES is a list of directories containing extra header files
 #---------------------------------------------------------------------------------
 TARGET		:=	$(shell basename $(CURDIR))
+GRAPHICS	:=	example_code
 BUILD		:=	build
 SOURCES		:=	gfx source data example_code
 INCLUDES	:=	include build NDSA
@@ -63,6 +64,7 @@ CFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.c)))
 CPPFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.cpp)))
 SFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.s)))
 BINFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.bin)))
+PNGFILES 	:= $(foreach dir,$(GRAPHICS),$(notdir $(wildcard $(dir)/*.png)))
  
 #---------------------------------------------------------------------------------
 # use CXX for linking C++ projects, CC for standard C
@@ -78,7 +80,7 @@ else
 endif
 #---------------------------------------------------------------------------------
 
-export OFILES	:=	$(BINFILES:.bin=.o) \
+export OFILES	:=	$(BINFILES:.bin=.o) $(PNGFILES:.png=.o) \
 					$(CPPFILES:.cpp=.o) $(CFILES:.c=.o) $(SFILES:.s=.o)
  
 export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
@@ -116,8 +118,18 @@ $(OUTPUT).elf	:	$(OFILES)
 #---------------------------------------------------------------------------------
 	@echo $(notdir $<)
 	$(bin2o)
+
+ #---------------------------------------------------------------------------------
+# This rule creates assembly source files using grit
+# grit takes an image file and a .grit describing how the file is to be processed
+# add additional rules like this for each image extension
+# you use in the graphics folders
+#---------------------------------------------------------------------------------
+%.s %.h: %.png %.grit
+#---------------------------------------------------------------------------------
+	grit $< -fts -o$*
  
- 
+
 -include $(DEPENDS)
  
 #---------------------------------------------------------------------------------------

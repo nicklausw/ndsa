@@ -1,6 +1,8 @@
 #include <NDSA.hh>
 using namespace NDSA;
 
+#include "testImage.h"
+
 #define SCREEN(x,y) "\x1b["#y";"#x"H"
 
 struct Custom : Object {
@@ -23,6 +25,7 @@ void NDSA::Game() {
   Custom *custom = new Custom();
 
   consoleDemoInit();
+  Background.Set(testImageBitmap, testImagePal, TopScreen);
 
   std::cout << SCREEN(0,5) << "NDSA is awesome!";
 
