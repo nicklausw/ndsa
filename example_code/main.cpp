@@ -22,7 +22,7 @@ struct Custom : Object {
 };
 
 struct Player : Object {
-  using Object::Object;
+  using ParentConstructors;
   void Run() override {
     if(Buttons.Up.Held()) {
       Move(Up, .1);

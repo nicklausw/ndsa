@@ -44,6 +44,10 @@ namespace NDSA {
 
     // all objects have code.
     virtual void Run() { }
+
+    // alias to make inherited objects using
+    // parent constructors look cleaner.
+    #define ParentConstructors Object::Object;
     
     Object(Sprite *nSprite, int nX, int nY, NDSA_Screen nSprScreen)
      :  X(nX), Y(nY), ObjSprite(nSprite), SprScreen(nSprScreen) {
