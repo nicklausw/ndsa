@@ -1,6 +1,5 @@
 namespace NDSA {
   // objects have directions to move
-  // but this will probably be moved to erin engine.
   enum Directions {
     Up, Down,
     Left, Right,
