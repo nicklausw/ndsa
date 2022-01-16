@@ -1,6 +1,6 @@
 namespace NDSA {
   // objects have directions to move
-  enum Directions {
+  enum Direction {
     Up, Down,
     Left, Right,
     UpLeft, UpRight,
@@ -37,10 +37,6 @@ namespace NDSA {
     
     public:
     float X, Y;
-    
-    // object movement magic
-    int MovementStep = 0;
-    Directions MovementDir;
 
     // all objects have code.
     virtual void Run() { }
@@ -75,7 +71,7 @@ namespace NDSA {
       Lists.Objects.erase(ListID);
     }
     
-    void Move(Directions Dir, float Number) {
+    void Move(Direction Dir, float Number) {
       sassert(Sprited == true, "Movement is for sprites only");
       
       switch (Dir) {
