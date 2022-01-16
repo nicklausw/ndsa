@@ -16,8 +16,8 @@ include $(DEVKITARM)/ds_rules
 #---------------------------------------------------------------------------------
 TARGET		:=	$(shell basename $(CURDIR))
 BUILD		:=	build
-SOURCES		:=	gfx source data  
-INCLUDES	:=	include build
+SOURCES		:=	gfx source data example_code
+INCLUDES	:=	include build NDSA
 
 #---------------------------------------------------------------------------------
 # options for code generation
