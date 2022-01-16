@@ -26,14 +26,14 @@ struct Player : Object {
   void Run() override {
     // TODO: This guy moves way too fast.
     if(Buttons.Up.Held()) {
-      Move(Up, 1);
+      Move(Up, .1);
     } else if(Buttons.Down.Held()) {
-      Move(Down, 1);
+      Move(Down, .1);
     }
     if(Buttons.Left.Held()) {
-      Move(Left, 1);
+      Move(Left, .1);
     } else if(Buttons.Right.Held()) {
-      Move(Right, 1);
+      Move(Right, .1);
     }
   }
 };

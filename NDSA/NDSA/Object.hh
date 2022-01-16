@@ -26,7 +26,7 @@ namespace NDSA {
     void Update() {
       // Sprite.hh is unaware of the internals
       // of the object class, so we pass manually.
-      Sprites.ObjUpdate(ID, X, Y, ObjSprite, SprScreen); 
+      Sprites.ObjUpdate(ID, round(X), round(Y), ObjSprite, SprScreen); 
     }
     
     void AddToList() {
@@ -36,7 +36,7 @@ namespace NDSA {
     }
     
     public:
-    int X, Y;
+    float X, Y;
     
     // use this for a "create" event! kinda!
     bool Initialized = false;
@@ -74,7 +74,7 @@ namespace NDSA {
       Lists.Objects.erase(ListID);
     }
     
-    void Move(Directions Dir, int Number) {
+    void Move(Directions Dir, float Number) {
       sassert(Sprited == true, "Movement is for sprites only");
       
       switch (Dir) {
