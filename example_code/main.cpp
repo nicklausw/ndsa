@@ -24,7 +24,6 @@ struct Custom : Object {
 struct Player : Object {
   using Object::Object;
   void Run() override {
-    // TODO: This guy moves way too fast.
     if(Buttons.Up.Held()) {
       Move(Up, .1);
     } else if(Buttons.Down.Held()) {
