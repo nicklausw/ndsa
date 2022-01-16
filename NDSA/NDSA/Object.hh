@@ -38,9 +38,6 @@ namespace NDSA {
     public:
     float X, Y;
     
-    // use this for a "create" event! kinda!
-    bool Initialized = false;
-    
     // object movement magic
     int MovementStep = 0;
     Directions MovementDir;
