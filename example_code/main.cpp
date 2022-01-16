@@ -40,9 +40,7 @@ struct Player : Object {
 #include <NDSA/Main.hh>
 void NDSA::Game() {
   Custom *custom = new Custom();
-  Sprite *manSprite = new Sprite(SpriteData(man),
-                                 SpriteSize_32x32,
-                                 SpriteColorFormat_256Color);
+  Sprite *manSprite = new Sprite(SpriteData(man), SpriteSize_32x32, SpriteColorFormat_256Color);
   Player *player = new Player(manSprite, 150, 50, TopScreen);
 
   consoleDemoInit();

@@ -1,5 +1,5 @@
 // time isn't that complicated, C++...c'mon.
-#define CURRENT_TIME_SECS (chrono::high_resolution_clock::now().time_since_epoch().count())
+#define CURRENT_TIME_SECS (std::chrono::high_resolution_clock::now().time_since_epoch().count())
 
 namespace NDSA {
   class {

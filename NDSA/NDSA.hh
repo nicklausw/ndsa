@@ -79,8 +79,6 @@ Planned features:
 #include <chrono>
 #include <list>
 
-using namespace std;
-
 // these names are too long...
 typedef const unsigned int TileData;
 typedef const unsigned short PaletteData;
