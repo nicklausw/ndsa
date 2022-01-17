@@ -1,5 +1,5 @@
 # NDSA - Nintendo DS Advanced Engine
-A project from 2016 that I'd like to bring back. It's a header library which wraps libnds functions, adds an object system, so on. If you have devkitPro installed, you should be able to clone the repo, run gnu make and have fun.
+A project from 2016 that I'd like to bring back. It's a header library which wraps libnds functions, adds an object system, so on. If you have devkitPro installed, you should be able to clone the repo, run GNU make and have fun.
 
 ## Objects
 Declare an object like so:
