@@ -49,3 +49,14 @@ Background.Set(BackgroundData(testImage), TopScreen);
 // add mersenne twister random number with C-style rand() number
 return Random.MT() + Random.Classic();
 ```
+
+## The Main Function
+Use this in favor of your own `int main`:
+```c++
+#include <NDSA/Main.hh>
+void NDSA::Game() {
+  while(DS.Frame()) {
+    // this code runs once every frame
+  }
+}
+```
