@@ -51,7 +51,6 @@ namespace NDSA {
       
       AddToList();
       
-      
       Sprited = true;
       Update();
       Run();
@@ -63,12 +62,13 @@ namespace NDSA {
       Run();
     }
     
-    ~Object() {
+    virtual ~Object() {
       if (Sprited == true) {
         Sprites.Empty_Slot(ID);
         oamClear(&oamMain, ID, 1);
       }
       Lists.Objects.erase(ListID);
+      --Lists.ObjectsIt;
     }
     
     void Move(Direction Dir, float Number) {

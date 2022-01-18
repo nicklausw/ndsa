@@ -12,7 +12,7 @@ struct Custom : Object {
     frame = 0;
   }
   void Run() override {
-    if(!TouchScreen.Pressed()) {
+    if(!TouchScreen.Held()) {
       frame++;
     } else {
       frame -= 2;
@@ -23,6 +23,10 @@ struct Custom : Object {
 
 struct Player : Object {
   using ParentConstructors;
+  ~Player() {
+    std::cout << SCREEN(0,6) << "You killed him! Touch again to  "
+                                "make another.";
+  }
   void Run() override {
     if(Buttons.Up.Held()) {
       Move(Up, .1);
@@ -46,8 +50,22 @@ void NDSA::Game() {
   consoleDemoInit();
   Background.Set(BackgroundData(testImage), TopScreen);
 
-  std::cout << SCREEN(0,5) << "NDSA is awesome!";
-  std::cout << SCREEN(0,6) << "Move the guy with the D-pad.";
+  std::cout << SCREEN(0,3) << "NDSA is awesome!";
+  std::cout << SCREEN(0,4) << "Move the guy with the D-pad.";
+  std::cout << SCREEN(0,6) << "Touch the screen to delete him.";
 
-  while(DS.Frame());
+  bool deleted = false;
+  while(DS.Frame()) {
+    if(TouchScreen.Tapped()) {
+      if(deleted == false) {
+        deleted = true;
+        delete player;
+      } else {
+        deleted = false;
+        player = new Player(manSprite, 150, 50, TopScreen);
+        std::cout << SCREEN(0,6) << "Hey, he's back!                 "
+                                    "                                ";
+      }
+    }
+  };
 }

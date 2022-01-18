@@ -26,7 +26,8 @@ namespace NDSA {
            L      {KEYPAD_BITS::KEY_L},
            R      {KEYPAD_BITS::KEY_R},
            X      {KEYPAD_BITS::KEY_X},
-           Y      {KEYPAD_BITS::KEY_Y};
+           Y      {KEYPAD_BITS::KEY_Y},
+           Touch  {KEYPAD_BITS::KEY_TOUCH};
   } Buttons;
   
   class {
@@ -34,7 +35,8 @@ namespace NDSA {
     public:
     void Update() { touchRead(&TPos); }
     
-    int Pressed() { return X() + Y(); }
+    int Held() { return Buttons.Touch.Held(); }
+    int Tapped() { return Buttons.Touch.Pressed(); }
     
     int Raw_X() { return TPos.rawx; }
     int X()     { return TPos.px; }
