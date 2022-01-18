@@ -2,8 +2,7 @@ namespace NDSA {
   class Object;
   
   struct {
-    std::list<Object*> Objects;
-    std::list<Object*>::iterator ObjectsIt = Objects.begin();
+    std::vector<Object*> Objects;
   } Lists;
   
   struct Sprite {

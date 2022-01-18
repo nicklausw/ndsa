@@ -12,7 +12,6 @@
 #include <cstdlib>
 #include <random>
 #include <chrono>
-#include <list>
 
 // these names are too long...
 typedef const unsigned int TileData;

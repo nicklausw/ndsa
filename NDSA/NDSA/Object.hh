@@ -11,9 +11,6 @@ namespace NDSA {
     // identifier for sprite.
     int ID;
     
-    // identifier for dynamic object list.
-    std::list<Object*>::iterator ListID;
-    
     // and the sprite itself!
     Sprite *ObjSprite;
     
@@ -31,11 +28,12 @@ namespace NDSA {
     
     void AddToList() {
       Lists.Objects.push_back(this);
-      ++Lists.ObjectsIt;
-      ListID = Lists.ObjectsIt;
     }
     
     public:
+    // a unique random number for every instance.
+    long PublicID;
+
     float X, Y;
 
     // all objects have code.
@@ -47,6 +45,7 @@ namespace NDSA {
     
     Object(Sprite *nSprite, int nX, int nY, NDSA_Screen nSprScreen)
      :  X(nX), Y(nY), ObjSprite(nSprite), SprScreen(nSprScreen) {
+      PublicID = Random.MT();
       ID = Sprites.Find_Slot();
       
       AddToList();
@@ -67,8 +66,14 @@ namespace NDSA {
         Sprites.Empty_Slot(ID);
         oamClear(&oamMain, ID, 1);
       }
-      Lists.Objects.erase(ListID);
-      --Lists.ObjectsIt;
+      std::vector<Object*>::iterator it = Lists.Objects.begin();
+      for(Object* o : Lists.Objects) {
+        if(o->PublicID == PublicID) {
+          Lists.Objects.erase(it);
+        } else {
+          ++it;
+        }
+      }
     }
     
     void Move(Direction Dir, float Number) {
