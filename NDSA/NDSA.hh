@@ -8,8 +8,6 @@
   #include "mmsolution_bin.h"  // solution binary reference
 #endif
  
-#include <iostream>
-#include <cstdlib>
 #include <random>
 #include <chrono>
 

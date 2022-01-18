@@ -1,6 +1,8 @@
 #include <NDSA.hh>
 using namespace NDSA;
 
+#include <iostream>
+
 #include "testImage.h"
 #include "man.h"
 #include "enemy.h"
@@ -106,5 +108,6 @@ void NDSA::Game() {
                                     "                                ";
       }
     }
+    std::cout << SCREEN(0,10) << "Number of objects: " << Lists.Objects.size() << "    ";
   };
 }
