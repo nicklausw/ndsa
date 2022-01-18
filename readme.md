@@ -6,7 +6,7 @@ Declare an object like so:
 ```c++
 struct Player : Object {
   using ParentConstructors;
-  void Run() override {
+  void Step() override {
     // code run once per frame
   }
 };

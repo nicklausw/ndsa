@@ -15,7 +15,7 @@ struct Custom : Object {
   Custom() {
     frame = 0;
   }
-  void Run() override {
+  void Step() override {
     if(!TouchScreen.Held()) {
       frame++;
     } else {
@@ -31,7 +31,7 @@ struct Player : Object {
     std::cout << SCREEN(0,6) << "You killed him! Touch again to  "
                                 "make another.";
   }
-  void Run() override {
+  void Step() override {
     if(Buttons.Up.Held()) {
       Move(Up, .1);
     } else if(Buttons.Down.Held()) {
@@ -47,7 +47,7 @@ struct Player : Object {
 
 struct Bullet : Object {
   using ParentConstructors;
-  void Run() override {
+  void Step() override {
     Move(Right, .1);
     if(X > 200.0F) {
       delete this;
@@ -60,7 +60,7 @@ struct Enemy : Object {
   int frame = 0;
   Sprite *bulletSpritePointer;
   Direction d = Down;
-  void Run() override {
+  void Step() override {
     frame++;
     if(frame == 500) {
       Bullet *newB = new Bullet(bulletSpritePointer, round(X + 8), round(Y + 16), TopScreen);

@@ -36,8 +36,8 @@ namespace NDSA {
 
     float X, Y;
 
-    // all objects have code.
-    virtual void Run() { }
+    // all objects have code run each frame.
+    virtual void Step() { }
 
     // alias to make inherited objects using
     // parent constructors look cleaner.
@@ -52,13 +52,11 @@ namespace NDSA {
       
       Sprited = true;
       Update();
-      Run();
     }
     
     Object() { 
       // simple!
       AddToList();
-      Run();
     }
     
     virtual ~Object() {

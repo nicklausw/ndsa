@@ -59,7 +59,7 @@ namespace NDSA {
       
       // run through object code
       for (Object *ThisObject : Lists.Objects) {
-        ThisObject->Run();
+        ThisObject->Step();
       }
       
       return true;
