@@ -43,18 +43,47 @@ struct Player : Object {
   }
 };
 
+struct Bullet : Object {
+  using ParentConstructors;
+  void Run() override {
+    Move(Right, .1);
+    if(X > 200.0F) {
+      delete this;
+    }
+  }
+};
+
 struct Enemy : Object {
   using ParentConstructors;
+  int frame = 0;
+  Sprite *bulletSpritePointer;
+  Direction d = Down;
+  void Run() override {
+    frame++;
+    if(frame == 500) {
+      Bullet *newB = new Bullet(bulletSpritePointer, round(X + 8), round(Y + 16), TopScreen);
+      frame = 0;
+    }
+
+    Move(d, .05);
+    if(Y < 20) {
+      d = Down;
+    } else if(Y > 150) {
+      d = Up;
+    }
+  }
 };
 
 #include <NDSA/Main.hh>
 void NDSA::Game() {
-  Custom *custom = new Custom();
   Sprite *manSprite = new Sprite(SpriteData(man), SpriteSize_32x32, SpriteColorFormat_256Color);
   Sprite *enemySprite = new Sprite(SpriteData(enemy), SpriteSize_32x32, SpriteColorFormat_256Color);
   Sprite *bulletSprite = new Sprite(SpriteData(bullet), SpriteSize_8x8, SpriteColorFormat_256Color);
+
+  Custom *custom = new Custom();
   Player *player = new Player(manSprite, 150, 50, TopScreen);
   Enemy *enemy = new Enemy(enemySprite, 50, 50, TopScreen);
+  enemy->bulletSpritePointer = bulletSprite;
 
 
   consoleDemoInit();
