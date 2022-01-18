@@ -51,20 +51,20 @@ namespace NDSA {
         SpriteGraphics = ObjSprite->GraphicsSub;
       }
         
-      oamSet(ThisState,    //main graphics engine context
-        ID,              //oam index (0 to 127)  
-        X,    //x and y pixel location of the sprite
+      oamSet(ThisState,  // main graphics engine context
+        ID,              // oam index (0 to 127)  
+        X,               // x and y pixel location of the sprite
         Y,    
-        0,      //priority, lower renders last (on top)
-        0, //palette index if multiple palettes or the alpha value if bmp sprite 
+        0,               // priority, lower renders last (on top)
+        0,               // palette index if multiple palettes or the alpha value if bmp sprite 
         ObjSprite->SprSize,
         ObjSprite->ColorFormat,
-        SpriteGraphics,    //pointer to the loaded graphics
-        -1, //sprite rotation data  
-        false,     //double the size when rotating?
-        false,   //hide the sprite?
-        false, false, //vflip, hflip
-        false //apply mosaic
+        SpriteGraphics,  // pointer to the loaded graphics
+        -1,              // sprite rotation data  
+        false,           // double the size when rotating?
+        false,           // hide the sprite?
+        false, false,    // vflip, hflip
+        false            // apply mosaic
         );
     }
     
