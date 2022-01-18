@@ -70,6 +70,7 @@ namespace NDSA {
       for(Object* o : Lists.Objects) {
         if(o->PublicID == PublicID) {
           Lists.Objects.erase(it);
+          break;
         } else {
           ++it;
         }
