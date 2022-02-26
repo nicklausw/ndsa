@@ -1,6 +1,9 @@
 # NDSA - Nintendo DS Advanced Engine
 A project from 2016 that I'd like to bring back. It's a header library which wraps libnds functions, adds an object system, so on. If you have devkitPro installed, you should be able to clone the repo, run GNU make and have fun.
 
+## What C++ features are used?
+Classes and namespaces. That's it; `std` isn't used.
+
 ## Objects
 Declare an object like so:
 ```c++
@@ -46,8 +49,8 @@ Background.Set(BackgroundData(testImage), TopScreen);
 
 ## Random Numbers
 ```c++
-// add mersenne twister random number with C-style rand() number
-return Random.MT() + Random.Classic();
+// get random number
+return Random.Next();
 ```
 
 ## The Main Function
