@@ -8,6 +8,8 @@ namespace NDSA {
   };
   
   class Object {
+    // identifier on object table.
+    int objectID;
     // identifier for sprite.
     int ID;
     
@@ -30,6 +32,7 @@ namespace NDSA {
       for(unsigned int c = 0; c < 2048; c++) {
         if(!Lists.Objects[c]) {
           Lists.Objects[c] = this;
+          objectID = c;
           break;
         }
       }
@@ -70,14 +73,7 @@ namespace NDSA {
         Sprites.Empty_Slot(ID);
         oamClear(&oamMain, ID, 1);
       }
-      for(int it = 0; it < 2048; it++) {
-        if(Lists.Objects[it]) {
-          if(Lists.Objects[it]->PublicID == PublicID) {
-            Lists.Objects[it] = 0;
-            break;
-          }
-        }
-      }
+      Lists.Objects[objectID] = 0;
       Lists.objectCount--;
     }
     
