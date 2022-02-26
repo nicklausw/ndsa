@@ -1,7 +1,7 @@
 #include <NDSA.hh>
 using namespace NDSA;
 
-#include "stdio.h"
+#include <stdio.h>
 
 #include "testImage.h"
 #include "man.h"
