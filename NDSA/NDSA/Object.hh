@@ -27,7 +27,13 @@ namespace NDSA {
     }
     
     void AddToList() {
-      Lists.Objects.push_back(this);
+      for(unsigned int c = 0; c < 2048; c++) {
+        if(!Lists.Objects[c]) {
+          Lists.Objects[c] = this;
+          break;
+        }
+      }
+      Lists.objectCount++;
     }
     
     public:
@@ -45,7 +51,7 @@ namespace NDSA {
     
     Object(Sprite *nSprite, int nX, int nY, NDSA_Screen nSprScreen)
      :  X(nX), Y(nY), ObjSprite(nSprite), SprScreen(nSprScreen) {
-      PublicID = Random.MT();
+      PublicID = Random.Next();
       ID = Sprites.Find_Slot();
       
       AddToList();
@@ -64,15 +70,15 @@ namespace NDSA {
         Sprites.Empty_Slot(ID);
         oamClear(&oamMain, ID, 1);
       }
-      std::vector<Object*>::iterator it = Lists.Objects.begin();
-      for(Object* o : Lists.Objects) {
-        if(o->PublicID == PublicID) {
-          Lists.Objects.erase(it);
-          break;
-        } else {
-          ++it;
+      for(int it = 0; it < 2048; it++) {
+        if(Lists.Objects[it]) {
+          if(Lists.Objects[it]->PublicID == PublicID) {
+            Lists.Objects[it] = 0;
+            break;
+          }
         }
       }
+      Lists.objectCount--;
     }
     
     void Move(Direction Dir, float Number) {

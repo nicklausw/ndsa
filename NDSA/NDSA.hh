@@ -2,14 +2,13 @@
 
 #include <nds.h>
 #include <maxmod9.h>
+#include <time.h>
+#include <math.h>
 
 #ifdef NDSA_AUDIO
   #include "mmsolution.h"    // solution definitions
   #include "mmsolution_bin.h"  // solution binary reference
 #endif
- 
-#include <random>
-#include <chrono>
 
 // these names are too long...
 typedef const unsigned int TileData;
@@ -28,6 +27,10 @@ namespace NDSA {
   
   struct {
     void Initialize() {
+      for(int c = 0; c < 2048; c++) {
+        Lists.Objects[c] = 0;
+      }
+
       videoSetMode(MODE_5_2D);
       videoSetModeSub(MODE_5_2D);
       
@@ -58,8 +61,13 @@ namespace NDSA {
       oamUpdate(&oamSub);
       
       // run through object code
-      for (Object *ThisObject : Lists.Objects) {
-        ThisObject->Step();
+      int count = 0;
+      for (unsigned int c = 0; c < 2048; c++) {
+        if(Lists.Objects[c]) {
+          count++;
+          Lists.Objects[c]->Step();
+          if(count == Lists.objectCount) break;
+        }
       }
       
       return true;

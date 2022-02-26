@@ -1,7 +1,7 @@
 #include <NDSA.hh>
 using namespace NDSA;
 
-#include <iostream>
+#include "stdio.h"
 
 #include "testImage.h"
 #include "man.h"
@@ -21,15 +21,15 @@ struct Custom : Object {
     } else {
       frame -= 2;
     }
-    std::cout << SCREEN(0,10) << "Frame = " << frame;
+    printf(SCREEN(0,10) "Frame = %d", frame);
   }
 };
 
 struct Player : Object {
   using ParentConstructors;
   ~Player() {
-    std::cout << SCREEN(0,6) << "You killed him! Touch again to  "
-                                "make another.";
+    printf(SCREEN(0,6) "You killed him! Touch again to  "
+                       "make another.");
   }
   void Step() override {
     if(Buttons.Up.Held()) {
@@ -91,9 +91,9 @@ void NDSA::Game() {
   consoleDemoInit();
   Background.Set(BackgroundData(testImage), TopScreen);
 
-  std::cout << SCREEN(0,3) << "NDSA is awesome!";
-  std::cout << SCREEN(0,4) << "Move the guy with the D-pad.";
-  std::cout << SCREEN(0,6) << "Touch the screen to delete him.";
+  printf(SCREEN(0,3) "NDSA is awesome!");
+  printf(SCREEN(0,4) "Move the guy with the D-pad.");
+  printf(SCREEN(0,6) "Touch the screen to delete him.");
 
   bool deleted = false;
   while(DS.Frame()) {
@@ -104,10 +104,10 @@ void NDSA::Game() {
       } else {
         deleted = false;
         player = new Player(manSprite, 150, 50, TopScreen);
-        std::cout << SCREEN(0,6) << "Hey, he's back!                 "
-                                    "                                ";
+        printf(SCREEN(0,6) "Hey, he's back!                 "
+                           "                                ");
       }
     }
-    std::cout << SCREEN(0,10) << "Number of objects: " << Lists.Objects.size() << "    ";
+    printf(SCREEN(0,10) "Number of objects: %d    ", Lists.objectCount);
   };
 }

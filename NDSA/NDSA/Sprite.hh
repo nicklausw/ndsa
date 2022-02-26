@@ -2,7 +2,8 @@ namespace NDSA {
   class Object;
   
   struct {
-    std::vector<Object*> Objects;
+    Object* Objects[2048];
+    int objectCount = 0;
   } Lists;
   
   struct Sprite {
