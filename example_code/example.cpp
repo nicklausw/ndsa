@@ -91,14 +91,12 @@ void NDSA::Game() {
   PrintAt(0, 4, "Move the guy with the D-pad.");
   PrintAt(0, 6, "Touch the screen to delete him.");
 
-  bool deleted = false;
   while(DS.Frame()) {
     if(TouchScreen.Tapped()) {
-      if(deleted == false) {
-        deleted = true;
+      if(player) {
         delete player;
+        player = 0;
       } else {
-        deleted = false;
         player = new Player(manSprite, 150, 50, TopScreen);
         PrintAt(0, 6, "Hey, he's back!                 "
                       "                                ");
