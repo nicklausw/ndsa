@@ -3,6 +3,7 @@
 #define MAX_OBJECTS 128
 
 #define SCREEN(x,y) "\x1b["#y";"#x"H"
+#define PrintAt(x,y,str,...) printf(SCREEN(x,y) str, ##__VA_ARGS__)
 
 #include <nds.h>
 #include <maxmod9.h>

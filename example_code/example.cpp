@@ -17,15 +17,15 @@ struct Custom : Object {
     } else {
       frame -= 2;
     }
-    printf(SCREEN(0,10) "Frame = %d", frame);
+    PrintAt(0, 10, "Frame = %d", frame);
   }
 };
 
 struct Player : Object {
   using ParentConstructors;
   ~Player() {
-    printf(SCREEN(0,6) "You killed him! Touch again to  "
-                       "make another.");
+    PrintAt(0, 6, "You killed him! Touch again to  "
+                  "make another.");
   }
   void Step() override {
     if(Buttons.Up.Held()) {
@@ -87,9 +87,9 @@ void NDSA::Game() {
   consoleDemoInit();
   Background.Set(BackgroundData(testImage), TopScreen);
 
-  printf(SCREEN(0,3) "NDSA is awesome!");
-  printf(SCREEN(0,4) "Move the guy with the D-pad.");
-  printf(SCREEN(0,6) "Touch the screen to delete him.");
+  PrintAt(0, 3, "NDSA is awesome!");
+  PrintAt(0, 4, "Move the guy with the D-pad.");
+  PrintAt(0, 6, "Touch the screen to delete him.");
 
   bool deleted = false;
   while(DS.Frame()) {
@@ -100,8 +100,8 @@ void NDSA::Game() {
       } else {
         deleted = false;
         player = new Player(manSprite, 150, 50, TopScreen);
-        printf(SCREEN(0,6) "Hey, he's back!                 "
-                           "                                ");
+        PrintAt(0, 6, "Hey, he's back!                 "
+                      "                                ");
       }
     }
     int objectCount = 0;
@@ -110,6 +110,6 @@ void NDSA::Game() {
         objectCount++;
       }
     }
-    printf(SCREEN(0,10) "Number of objects: %d    ", objectCount);
+    PrintAt(0, 12, "Number of objects: %d    ", objectCount);
   };
 }
