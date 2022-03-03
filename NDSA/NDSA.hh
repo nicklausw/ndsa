@@ -47,7 +47,7 @@ namespace NDSA {
 namespace NDSA {
   extern void Game();
   
-  extern struct DSObj {
+  struct {
     void Initialize() {
       for(int c = 0; c < MAX_OBJECTS; c++) {
         Objects[c] = 0;

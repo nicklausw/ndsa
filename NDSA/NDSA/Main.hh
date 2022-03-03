@@ -1,6 +1,5 @@
 namespace NDSA {
   Object *Objects[MAX_OBJECTS];
-  DSObj DS;
   BGObj Background;
   ButtonsObj Buttons;
   TSObj TouchScreen;
