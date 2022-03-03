@@ -6,6 +6,10 @@ using namespace NDSA;
 #include "enemy.h"
 #include "bullet.h"
 
+// ensure multi-module support
+int objectCount();
+void printFrame(int);
+
 struct Custom : Object {
   int frame;
   Custom() {
@@ -17,7 +21,7 @@ struct Custom : Object {
     } else {
       frame -= 2;
     }
-    PrintAt(0, 10, "Frame = %d", frame);
+    printFrame(frame);
   }
 };
 
@@ -102,12 +106,8 @@ void NDSA::Game() {
                       "                                ");
       }
     }
-    int objectCount = 0;
-    for(int c = 0; c < MAX_OBJECTS; c++) {
-      if(Lists.Objects[c]) {
-        objectCount++;
-      }
-    }
-    PrintAt(0, 12, "Number of objects: %d    ", objectCount);
+    int count = objectCount();
+    PrintAt(0, 12, "Number of objects: %d    ", count);
+    PrintAt(0, 13, "Random number: %ld", Random.Next());
   };
 }

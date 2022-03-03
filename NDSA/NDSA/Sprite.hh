@@ -1,10 +1,4 @@
 namespace NDSA {
-  class Object;
-  
-  struct {
-    Object* Objects[MAX_OBJECTS];
-  } Lists;
-  
   struct Sprite {
     u16 *Graphics;
     u16 *GraphicsSub;
@@ -34,7 +28,7 @@ namespace NDSA {
     }
   };
   
-  class {
+  extern class SpritesObj {
     bool Open_Sprites[SPRITE_COUNT];
     
     public:   

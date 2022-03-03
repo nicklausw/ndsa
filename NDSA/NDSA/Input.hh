@@ -14,7 +14,7 @@ namespace NDSA {
     }
   };
 
-  struct {
+  extern struct ButtonsObj {
     Button A      {KEYPAD_BITS::KEY_A},
            B      {KEYPAD_BITS::KEY_B},
            Up     {KEYPAD_BITS::KEY_UP},
@@ -30,7 +30,7 @@ namespace NDSA {
            Touch  {KEYPAD_BITS::KEY_TOUCH};
   } Buttons;
   
-  class {
+  extern class TSObj {
     touchPosition TPos;
     public:
     void Update() { touchRead(&TPos); }

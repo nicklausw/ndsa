@@ -1,5 +1,5 @@
 namespace NDSA {
-  class {
+  extern class RandomObj {
     bool Seeded = false;
     
     public:

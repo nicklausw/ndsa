@@ -1,5 +1,5 @@
 namespace NDSA {
-  class {
+  extern class BGObj {
     int BGData, BGDataSub;
     
     public:

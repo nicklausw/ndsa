@@ -32,6 +32,11 @@ namespace NDSA {
     va_end(argptr);
     while(1);
   }
+
+  class Object;
+  extern struct ListsObj {
+    Object* Objects[MAX_OBJECTS];
+  } Lists;
 }
 
 #include <NDSA/Screen.hh>
@@ -44,7 +49,7 @@ namespace NDSA {
 namespace NDSA {
   extern void Game();
   
-  struct {
+  extern struct DSObj {
     void Initialize() {
       for(int c = 0; c < MAX_OBJECTS; c++) {
         Lists.Objects[c] = 0;
