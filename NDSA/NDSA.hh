@@ -34,9 +34,7 @@ namespace NDSA {
   }
 
   class Object;
-  extern struct ListsObj {
-    Object* Objects[MAX_OBJECTS];
-  } Lists;
+  extern Object *Objects[MAX_OBJECTS];
 }
 
 #include <NDSA/Screen.hh>
@@ -52,7 +50,7 @@ namespace NDSA {
   extern struct DSObj {
     void Initialize() {
       for(int c = 0; c < MAX_OBJECTS; c++) {
-        Lists.Objects[c] = 0;
+        Objects[c] = 0;
       }
 
       videoSetMode(MODE_5_2D);
@@ -86,8 +84,8 @@ namespace NDSA {
       
       // run through object code
       for (unsigned int c = 0; c < MAX_OBJECTS; c++) {
-        if(Lists.Objects[c]) {
-          Lists.Objects[c]->Step();
+        if(Objects[c]) {
+          Objects[c]->Step();
         }
       }
       

@@ -1,5 +1,5 @@
 namespace NDSA {
-  ListsObj Lists;
+  Object *Objects[MAX_OBJECTS];
   DSObj DS;
   BGObj Background;
   ButtonsObj Buttons;

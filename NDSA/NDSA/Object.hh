@@ -30,8 +30,8 @@ namespace NDSA {
     
     void AddToList() {
       for(unsigned int c = 0; c < MAX_OBJECTS; c++) {
-        if(!Lists.Objects[c]) {
-          Lists.Objects[c] = this;
+        if(!Objects[c]) {
+          Objects[c] = this;
           objectID = c;
           return;
         }
@@ -73,7 +73,7 @@ namespace NDSA {
         Sprites.Empty_Slot(ID);
         oamClear(&oamMain, ID, 1);
       }
-      Lists.Objects[objectID] = 0;
+      Objects[objectID] = 0;
     }
     
     void Move(Direction Dir, float Number) {
