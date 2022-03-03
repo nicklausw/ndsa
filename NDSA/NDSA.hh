@@ -6,15 +6,16 @@
 #define PrintAt(x,y,str,...) printf(SCREEN(x,y) str, ##__VA_ARGS__)
 
 #include <nds.h>
-#include <maxmod9.h>
 #include <ctime>
 #include <cmath>
 #include <cstdio>
 #include <cstdarg>
 
 #ifdef NDSA_AUDIO
-  #include "mmsolution.h"    // solution definitions
-  #include "mmsolution_bin.h"  // solution binary reference
+  #include <maxmod9.h>
+  #include "mmsolution.h" // solution definitions
+  #include "mmsolution_bin.h" // solution binary reference
+  #include <NDSA/Audio.hh>
 #endif
 
 // these names are too long...
@@ -34,7 +35,6 @@ namespace NDSA {
 }
 
 #include <NDSA/Screen.hh>
-#include <NDSA/Audio.hh>
 #include <NDSA/Input.hh>
 #include <NDSA/Random.hh>
 #include <NDSA/Background.hh>
