@@ -5,15 +5,17 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/NDSA",
-                "c:/msys64/opt/devkitpro/libnds/include"
+                "c:/msys64/opt/devkitpro/libnds/include/",
+                "/opt/devkitpro/libnds/include/"
             ],
             "defines": [
                 "_DEBUG",
                 "UNICODE",
-                "_UNICODE"
+                "_UNICODE",
+                "ARM9"
             ],
             "windowsSdkVersion": "10.0.18362.0",
-            "compilerPath": "C:\\msys64\\opt\\devkitpro\\devkitARM\\bin\\arm-none-eabi-g++",
+            "compilerPath": "/opt/devkitpro/devkitARM/bin/arm-none-eabi-g++",
             "cStandard": "c17",
             "cppStandard": "c++17",
             "intelliSenseMode": "linux-gcc-arm"

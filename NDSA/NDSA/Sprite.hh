@@ -2,8 +2,7 @@ namespace NDSA {
   class Object;
   
   struct {
-    Object* Objects[2048];
-    int objectCount = 0;
+    Object* Objects[MAX_OBJECTS];
   } Lists;
   
   struct Sprite {

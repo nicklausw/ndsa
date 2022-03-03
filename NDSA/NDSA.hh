@@ -1,9 +1,15 @@
 #pragma once
 
+#define MAX_OBJECTS 128
+
+#define SCREEN(x,y) "\x1b["#y";"#x"H"
+
 #include <nds.h>
 #include <maxmod9.h>
-#include <time.h>
-#include <math.h>
+#include <ctime>
+#include <cmath>
+#include <cstdio>
+#include <cstdarg>
 
 #ifdef NDSA_AUDIO
   #include "mmsolution.h"    // solution definitions
@@ -13,7 +19,19 @@
 // these names are too long...
 typedef const unsigned int TileData;
 typedef const unsigned short PaletteData;
-  
+
+namespace NDSA {
+  inline void Fatal(const char *s,...) {
+    consoleDemoInit();
+    va_list argptr;
+    va_start(argptr,s);
+    fprintf(stdout, SCREEN(0,10) "ERROR: ");
+    vfprintf(stdout, s, argptr);
+    va_end(argptr);
+    while(1);
+  }
+}
+
 #include <NDSA/Screen.hh>
 #include <NDSA/Audio.hh>
 #include <NDSA/Input.hh>
@@ -27,7 +45,7 @@ namespace NDSA {
   
   struct {
     void Initialize() {
-      for(int c = 0; c < 2048; c++) {
+      for(int c = 0; c < MAX_OBJECTS; c++) {
         Lists.Objects[c] = 0;
       }
 
@@ -61,12 +79,9 @@ namespace NDSA {
       oamUpdate(&oamSub);
       
       // run through object code
-      int count = 0;
-      for (unsigned int c = 0; c < 2048; c++) {
+      for (unsigned int c = 0; c < MAX_OBJECTS; c++) {
         if(Lists.Objects[c]) {
-          count++;
           Lists.Objects[c]->Step();
-          if(count == Lists.objectCount) break;
         }
       }
       

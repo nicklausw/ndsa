@@ -1,14 +1,10 @@
 #include <NDSA.hh>
 using namespace NDSA;
 
-#include <stdio.h>
-
 #include "testImage.h"
 #include "man.h"
 #include "enemy.h"
 #include "bullet.h"
-
-#define SCREEN(x,y) "\x1b["#y";"#x"H"
 
 struct Custom : Object {
   int frame;
@@ -62,12 +58,12 @@ struct Enemy : Object {
   Direction d = Down;
   void Step() override {
     frame++;
-    if(frame == 500) {
+    if(frame == 100) {
       Bullet *newB = new Bullet(bulletSpritePointer, round(X + 8), round(Y + 16), TopScreen);
       frame = 0;
     }
 
-    Move(d, .05);
+    Move(d, .075);
     if(Y < 20) {
       d = Down;
     } else if(Y > 150) {
@@ -108,6 +104,12 @@ void NDSA::Game() {
                            "                                ");
       }
     }
-    printf(SCREEN(0,10) "Number of objects: %d    ", Lists.objectCount);
+    int objectCount = 0;
+    for(int c = 0; c < MAX_OBJECTS; c++) {
+      if(Lists.Objects[c]) {
+        objectCount++;
+      }
+    }
+    printf(SCREEN(0,10) "Number of objects: %d    ", objectCount);
   };
 }
