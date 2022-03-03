@@ -83,8 +83,7 @@ namespace NDSA {
         }
       }
       
-      // thank god for assertions...
-      sassert(0, "All sprite slots taken");
+      Fatal("All sprite slots taken");
       return -1;
     }
   } Sprites;
