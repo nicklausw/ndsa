@@ -8,8 +8,6 @@ namespace NDSA {
   };
   
   class Object {
-    // identifier on object table.
-    int objectID;
     // identifier for sprite.
     int ID;
     
@@ -29,14 +27,7 @@ namespace NDSA {
     }
     
     void AddToList() {
-      for(unsigned int c = 0; c < MAX_OBJECTS; c++) {
-        if(!Objects[c]) {
-          Objects[c] = this;
-          objectID = c;
-          return;
-        }
-      }
-      Fatal("Too many objects (%d).", MAX_OBJECTS);
+      Objects.add(this);
     }
     
     public:
@@ -73,7 +64,7 @@ namespace NDSA {
         Sprites.Empty_Slot(ID);
         oamClear(&oamMain, ID, 1);
       }
-      Objects[objectID] = 0;
+      Objects.removeByInstance(this);
     }
     
     void Move(Direction Dir, float Number) {

@@ -1,7 +1,5 @@
 #pragma once
 
-#define MAX_OBJECTS 128
-
 #define SCREEN(x,y) "\x1b["#y";"#x"H"
 #define PrintAt(x,y,str,...) printf(SCREEN(x,y) str, ##__VA_ARGS__)
 
@@ -10,6 +8,8 @@
 #include <cmath>
 #include <cstdio>
 #include <cstdarg>
+
+#include <NDSA/List.hh>
 
 #ifdef NDSA_AUDIO
   #include <maxmod9.h>
@@ -34,7 +34,7 @@ namespace NDSA {
   }
 
   class Object;
-  extern Object *Objects[MAX_OBJECTS];
+  extern PointerList<Object> Objects;
 }
 
 #include <NDSA/Screen.hh>
@@ -49,10 +49,6 @@ namespace NDSA {
   
   struct {
     void Initialize() {
-      for(int c = 0; c < MAX_OBJECTS; c++) {
-        Objects[c] = 0;
-      }
-
       videoSetMode(MODE_5_2D);
       videoSetModeSub(MODE_5_2D);
       
@@ -82,10 +78,16 @@ namespace NDSA {
       oamUpdate(&oamMain);
       oamUpdate(&oamSub);
       
-      // run through object code
-      for (unsigned int c = 0; c < MAX_OBJECTS; c++) {
-        if(Objects[c]) {
-          Objects[c]->Step();
+      // run through object code. the list can change as we go along.
+      // so we only run the current set of objects from the start of frame.
+      PointerList<Object> currentObjects;
+      for(int c = 0; c < Objects.count; c++) {
+        currentObjects.add(Objects.getByIndex(c));
+      }
+      for(int c = 0; c < currentObjects.count; c++) {
+        Object *o = currentObjects.getByIndex(c);
+        if(Objects.found(o)) { // if it's still on the list
+          o->Step();
         }
       }
       

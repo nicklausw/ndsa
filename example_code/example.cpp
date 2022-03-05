@@ -7,7 +7,6 @@ using namespace NDSA;
 #include "bullet.h"
 
 // ensure multi-module support
-int objectCount();
 void printFrame(int);
 
 struct Custom : Object {
@@ -33,14 +32,14 @@ struct Player : Object {
   }
   void Step() override {
     if(Buttons.Up.Held()) {
-      Move(Up, .1);
+      Move(Up, .2);
     } else if(Buttons.Down.Held()) {
-      Move(Down, .1);
+      Move(Down, .2);
     }
     if(Buttons.Left.Held()) {
-      Move(Left, .1);
+      Move(Left, .2);
     } else if(Buttons.Right.Held()) {
-      Move(Right, .1);
+      Move(Right, .2);
     }
   }
 };
@@ -49,7 +48,7 @@ struct Bullet : Object {
   using ParentConstructors;
   void Step() override {
     Move(Right, .1);
-    if(X > 200.0F) {
+    if(X > 220.0F) {
       delete this;
     }
   }
@@ -62,7 +61,7 @@ struct Enemy : Object {
   Direction d = Down;
   void Step() override {
     frame++;
-    if(frame == 100) {
+    if(frame == 50) {
       Bullet *newB = new Bullet(bulletSpritePointer, round(X + 8), round(Y + 16), TopScreen);
       frame = 0;
     }
@@ -94,20 +93,36 @@ void NDSA::Game() {
   PrintAt(0, 3, "NDSA is awesome!");
   PrintAt(0, 4, "Move the guy with the D-pad.");
   PrintAt(0, 6, "Touch the screen to delete him.");
-
+  
+  PointerList<Object> *oList = new PointerList<Object>();
   while(DS.Frame()) {
+    if(Buttons.A.Pressed()) {
+      Objects.deleteByType<Bullet*>();
+    }
+    if(Buttons.B.Held()) {
+      Object *o = new Object();
+      Object *p = new Object();
+      Object *z = new Object();
+      oList->add(o);
+      oList->add(p);
+      oList->add(z);
+    }
+    if(Buttons.Y.Pressed()) {
+      oList->deleteAll();
+    }
     if(TouchScreen.Tapped()) {
       if(player) {
-        delete player;
-        player = 0;
+        Objects.deleteByInstance<Player>(&player);
       } else {
         player = new Player(manSprite, 150, 50, TopScreen);
         PrintAt(0, 6, "Hey, he's back!                 "
                       "                                ");
       }
     }
-    int count = objectCount();
+    int count = Objects.count, size = Objects.listSize;
     PrintAt(0, 12, "Number of objects: %d    ", count);
-    PrintAt(0, 13, "Random number: %ld", Random.Next());
+    PrintAt(0, 14, "Objects list size: %d    ", size);
+    PrintAt(0, 16, "Random number: %ld", Random.Next());
+    PrintAt(0, 18, "Number of bullets: %d    ", Objects.getByType<Bullet>().count);
   };
 }
