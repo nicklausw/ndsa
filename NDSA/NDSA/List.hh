@@ -10,9 +10,19 @@ namespace NDSA {
     int listSize;
     int count;
 
+    PointerList<T> getCopy() {
+      PointerList<T> newList;
+      newList.listSize = listSize;
+      newList.count = count;
+      int dataSize = listSize * sizeof(T*);
+      newList.data = (T**)malloc(dataSize);
+      memcpy(newList.data, data, dataSize);
+      return newList;
+    }
+
     PointerList() {
       listSize = 2;
-      data = (T**)calloc(listSize * sizeof(T*), 1);
+      data = (T**)malloc(listSize * sizeof(T*));
       count = 0;
     }
 
@@ -76,21 +86,21 @@ namespace NDSA {
   
     template <typename Tcasted>
     inline void deleteByInstance(Tcasted**o) {
-        for(int c = 0; c < count; c++) {
-          if(getByIndex(c) == *o) {
-            delete getByIndex(c);
-            *o = 0;
-            return;
-          }
+      for(int c = 0; c < count; c++) {
+        if(getByIndex(c) == *o) {
+          delete getByIndex(c);
+          *o = 0;
+          return;
         }
       }
+    }
   
     template<typename Tcasted>
     inline void deleteByType() {
       for(int c = 0; c < count; c++) {
         if(dynamic_cast<Tcasted>(getByIndex(c))) {
           delete getByIndex(c);
-        c--;
+          c--;
         }
       }
     }

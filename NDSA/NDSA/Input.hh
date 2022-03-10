@@ -33,15 +33,15 @@ namespace NDSA {
   extern class TSObj {
     touchPosition TPos;
     public:
-    void Update() { touchRead(&TPos); }
+    inline void Update() { touchRead(&TPos); }
     
-    int Held() { return Buttons.Touch.Held(); }
-    int Tapped() { return Buttons.Touch.Pressed(); }
+    inline int Held() { return Buttons.Touch.Held(); }
+    inline int Tapped() { return Buttons.Touch.Pressed(); }
     
-    int Raw_X() { return TPos.rawx; }
-    int X()     { return TPos.px; }
+    inline int Raw_X() { return TPos.rawx; }
+    inline int X()     { return TPos.px; }
     
-    int Raw_Y() { return TPos.rawy; }
-    int Y()     { return TPos.py; }
+    inline int Raw_Y() { return TPos.rawy; }
+    inline int Y()     { return TPos.py; }
   } TouchScreen;
 }

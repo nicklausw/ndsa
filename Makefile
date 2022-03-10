@@ -19,19 +19,20 @@ GRAPHICS	:=	example_code/images
 BUILD		:=	build
 SOURCES		:=	gfx source data example_code example_code/images
 INCLUDES	:=	include build NDSA
+TILEMAPS    :=  example_code/images
 
 #---------------------------------------------------------------------------------
 # options for code generation
 #---------------------------------------------------------------------------------
 ARCH	:=	-mthumb -mthumb-interwork
 
-CFLAGS	:=	-g -Wall -O2 -std=c++11 \
+CFLAGS	:=	-g -Wall -O2 \
  			-march=armv5te -mtune=arm946e-s -fomit-frame-pointer\
-			-ffast-math -fexceptions -Wno-reorder -Wno-unused-variable \
+			-ffast-math -fexceptions -Wno-unused-variable \
 			$(ARCH)
 
 CFLAGS	+=	$(INCLUDE) -DARM9
-CXXFLAGS	:= $(CFLAGS)
+CXXFLAGS	:= $(CFLAGS) -std=c++11 -Wno-reorder
 
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=ds_arm9.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
@@ -64,8 +65,9 @@ CFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.c)))
 CPPFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.cpp)))
 SFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.s)))
 BINFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.bin)))
-PNGFILES 	:= $(foreach dir,$(GRAPHICS),$(notdir $(wildcard $(dir)/*.png)))
- 
+PNGFILES 	:=  $(foreach dir,$(GRAPHICS),$(notdir $(wildcard $(dir)/*.png)))
+TMXFILES    :=  $(foreach dir,$(TILEMAPS),$(notdir $(wildcard $(dir)/*.tmx)))
+CSVFILES    :=  $(subst .tmx,.csv,$(TMXFILES))
 #---------------------------------------------------------------------------------
 # use CXX for linking C++ projects, CC for standard C
 #---------------------------------------------------------------------------------
@@ -80,9 +82,9 @@ else
 endif
 #---------------------------------------------------------------------------------
 
-export OFILES	:=	$(BINFILES:.bin=.o) $(PNGFILES:.png=.o) \
+export OFILES	:=	$(BINFILES:.bin=.o) $(CSVFILES:.csv=.o) $(PNGFILES:.png=.o) \
 					$(CPPFILES:.cpp=.o) $(CFILES:.c=.o) $(SFILES:.s=.o)
- 
+
 export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
 					$(foreach dir,$(LIBDIRS),-I$(dir)/include) \
 					-I$(CURDIR)/$(BUILD)
@@ -119,6 +121,15 @@ $(OUTPUT).elf	:	$(OFILES)
 	@echo $(notdir $<)
 	$(bin2o)
 
+%.c %.h: %.csv
+	@echo $(notdir $(subst .csv,.c,$<))
+	@../tools/mapToC.py $< $(notdir $(subst .csv,.c,$<) $(subst .csv,.h,$<))
+
+%.csv: %.tmx
+	@echo $(notdir $(subst .tmx,.csv,$<))
+	@tiled --export-map csv $< $(notdir $(subst .tmx,.csv,$<))
+
+
  #---------------------------------------------------------------------------------
 # This rule creates assembly source files using grit
 # grit takes an image file and a .grit describing how the file is to be processed
@@ -128,7 +139,6 @@ $(OUTPUT).elf	:	$(OFILES)
 %.s %.h: %.png %.grit
 #---------------------------------------------------------------------------------
 	grit $< -fts -o$*
- 
 
 -include $(DEPENDS)
  

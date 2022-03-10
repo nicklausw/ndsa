@@ -14,17 +14,22 @@ namespace NDSA {
       
       Graphics = oamAllocateGfx(&oamMain, SprSize, ColorFormat);
       GraphicsSub = oamAllocateGfx(&oamSub, SprSize, ColorFormat);
-     
+      if(!Graphics || !GraphicsSub) {
+        Fatal("Out of OAM memory.");
+      }
+
       dmaCopy(Tiles, Graphics, TileLen);
       dmaCopy(Tiles, GraphicsSub, TileLen);
      
-      dmaCopy(Palette, SPRITE_PALETTE, PalLen);
-      dmaCopy(Palette, SPRITE_PALETTE_SUB, PalLen);
+      if(Palette) {
+        dmaCopy(Palette, SPRITE_PALETTE, PalLen);
+        dmaCopy(Palette, SPRITE_PALETTE_SUB, PalLen);
+      }
     }
     
     ~Sprite() {
       oamFreeGfx(&oamMain, Graphics);
-      oamFreeGfx(&oamSub, Graphics);
+      oamFreeGfx(&oamSub, GraphicsSub);
     }
   };
   
@@ -81,4 +86,19 @@ namespace NDSA {
       return -1;
     }
   } Sprites;
+
+  class SpriteSet : public PointerList<Sprite> {
+    public:
+    SpriteSet(TileData *Tiles, int TileLen, PaletteData *Palette, int PalLen,
+     SpriteSize nSprSize, SpriteColorFormat nColorFormat) {
+      // we have to allocate everything twice to maintain dual screen compatibility.
+      PointerList<Sprite>();
+      int dataSize = TileLen / 1024;
+      for(int c = 0; c < dataSize; c++) {
+        Sprite *s = new Sprite(Tiles, 1024, (c == dataSize - 1 ? Palette : 0), PalLen, nSprSize, nColorFormat);
+        add(s);
+        Tiles += 1024;
+      }
+    }
+  };
 }
