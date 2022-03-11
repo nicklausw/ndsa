@@ -160,9 +160,9 @@ $(OUTPUT).elf	:	$(OFILES)
 	@echo $(notdir $<)
 	$(bin2o)
 
-%.c %.h: %.csv
-	@echo $(notdir $(subst .csv,.c,$<))
-	@../tools/mapToC.py $< $(notdir $(subst .csv,.c,$<) $(subst .csv,.h,$<))
+%.s %.h: %.csv
+	@echo $(notdir $(subst .csv,.s,$<))
+	@../tools/mapToC.py $< $(notdir $(subst .csv,.s,$<) $(subst .csv,.h,$<))
 
 %.csv: %.tmx
 	@echo $(notdir $(subst .tmx,.csv,$<))
