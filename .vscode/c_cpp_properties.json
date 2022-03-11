@@ -19,7 +19,7 @@
             ],
             "compilerPath": "/opt/devkitpro/devkitARM/bin/arm-none-eabi-g++",
             "cStandard": "c17",
-            "cppStandard": "c++17",
+            "cppStandard": "c++11",
             "intelliSenseMode": "linux-gcc-arm"
         }
     ],
