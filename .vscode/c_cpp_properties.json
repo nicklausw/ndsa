@@ -1,11 +1,12 @@
 {
     "configurations": [
         {
-            "name": "Win32",
+            "name": "config",
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/NDSA",
                 "c:/msys64/opt/devkitpro/libnds/include/",
+                "c:/msys64/opt/devkitpro/libgba/include/",
                 "/opt/devkitpro/libnds/include/",
                 "/opt/devkitpro/libgba/include"
             ],
@@ -16,7 +17,6 @@
                 "ARM9",
                 "GBA"
             ],
-            "windowsSdkVersion": "10.0.18362.0",
             "compilerPath": "/opt/devkitpro/devkitARM/bin/arm-none-eabi-g++",
             "cStandard": "c17",
             "cppStandard": "c++17",
