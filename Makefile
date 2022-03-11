@@ -39,9 +39,9 @@ BUILD		:=	GBAbuild
 else
 BUILD       :=  DSbuild
 endif
-SOURCES		:=	gfx source data example_code example_code/images
+SOURCES		:=	gfx source data example_code
 INCLUDES	:=	include build NDSA
-TILEMAPS    :=  example_code/images
+TILEMAPS    :=  example_code/tilemaps
 
 #---------------------------------------------------------------------------------
 # options for code generation
@@ -92,7 +92,9 @@ ifneq ($(BUILD),$(notdir $(CURDIR)))
  
 export OUTPUT	:=	$(CURDIR)/$(TARGET)
  
-export VPATH	:=	$(foreach dir,$(SOURCES),$(CURDIR)/$(dir))
+export VPATH	:=	$(foreach dir,$(SOURCES),$(CURDIR)/$(dir)) \
+                    $(foreach dir,$(GRAPHICS),$(CURDIR)/$(dir)) \
+                    $(foreach dir,$(TILEMAPS),$(CURDIR)/$(dir))
 export DEPSDIR	:=	$(CURDIR)/$(BUILD)
 
 CFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.c)))
@@ -101,7 +103,7 @@ SFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.s)))
 BINFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.bin)))
 PNGFILES 	:=  $(foreach dir,$(GRAPHICS),$(notdir $(wildcard $(dir)/*.png)))
 TMXFILES    :=  $(foreach dir,$(TILEMAPS),$(notdir $(wildcard $(dir)/*.tmx)))
-CSVFILES    :=  $(subst .tmx,.csv,$(TMXFILES))
+
 #---------------------------------------------------------------------------------
 # use CXX for linking C++ projects, CC for standard C
 #---------------------------------------------------------------------------------
@@ -116,7 +118,7 @@ else
 endif
 #---------------------------------------------------------------------------------
 
-export OFILES	:=	$(BINFILES:.bin=.o) $(CSVFILES:.csv=.o) $(PNGFILES:.png=.o) \
+export OFILES	:=	$(BINFILES:.bin=.o) $(TMXFILES:.tmx=.o) $(PNGFILES:.png=.o) \
 					$(CPPFILES:.cpp=.o) $(CFILES:.c=.o) $(SFILES:.s=.o)
 
 export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
@@ -160,13 +162,9 @@ $(OUTPUT).elf	:	$(OFILES)
 	@echo $(notdir $<)
 	$(bin2o)
 
-%.s %.h: %.csv
-	@echo $(notdir $(subst .csv,.s,$<))
-	@../tools/mapToC.py $< $(notdir $(subst .csv,.s,$<) $(subst .csv,.h,$<))
-
-%.csv: %.tmx
-	@echo $(notdir $(subst .tmx,.csv,$<))
-	@tiled --export-map csv $< $(notdir $(subst .tmx,.csv,$<))
+%.s %.h: %.tmx
+	@echo $<
+	@../tools/mapToS.py $< $(notdir $(subst .tmx,.s,$<) $(subst .tmx,.h,$<))
 
 
  #---------------------------------------------------------------------------------
