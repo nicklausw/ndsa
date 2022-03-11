@@ -11,6 +11,7 @@ namespace NDSA {
         }
       }
     }
+    
     bool squareGood(int x, int y, int xWidth, int yHeight) {
       for(int c = x; c < x + xWidth; c++) {
         if(c >= 16) return false;

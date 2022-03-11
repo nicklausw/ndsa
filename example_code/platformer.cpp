@@ -20,7 +20,7 @@ double movementROC(double velocity, double acceleration, int step) {
 struct Bullet : Object {
   using ParentConstructors;
   void Step() override {
-    Move(Right, 5);
+    Move(Right, 10);
     if(X >= SCREEN_WIDTH - 32) {
       delete this;
     }

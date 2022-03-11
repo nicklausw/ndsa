@@ -30,3 +30,11 @@
 * updated to repo format
 * MIT license
 * plenty of code improvements
+
+### x/xx/xx - v2.0?
+* GBA support is here!
+* large tiled background support
+* sprite sheet support
+* use c functions rather than std
+* PointerList!!!
+* objects can be accessed by type/index

@@ -204,10 +204,7 @@ namespace NDSA {
   class SpriteSheet : public PointerList<Sprite> {
     public:
     SpriteSheet(TileData *Tiles, int TileLen, PaletteData *Palette, int PalLen,
-     SpriteDimensions nSprSize, ColorFormat nColorFormat
-     ) {
-      // we have to allocate everything twice to maintain dual screen compatibility.
-      PointerList<Sprite>();
+     SpriteDimensions nSprSize, ColorFormat nColorFormat) {
       int dataSize = TileLen / 1024;
       for(int c = 0; c < dataSize; c++) {
         Sprite *s = new Sprite(Tiles, 1024, (c == dataSize - 1 ? Palette : 0), PalLen, nSprSize, nColorFormat);
