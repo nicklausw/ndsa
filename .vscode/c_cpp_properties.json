@@ -6,13 +6,15 @@
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/NDSA",
                 "c:/msys64/opt/devkitpro/libnds/include/",
-                "/opt/devkitpro/libnds/include/"
+                "/opt/devkitpro/libnds/include/",
+                "/opt/devkitpro/libgba/include"
             ],
             "defines": [
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE",
-                "ARM9"
+                "ARM9",
+                "GBA"
             ],
             "windowsSdkVersion": "10.0.18362.0",
             "compilerPath": "/opt/devkitpro/devkitARM/bin/arm-none-eabi-g++",

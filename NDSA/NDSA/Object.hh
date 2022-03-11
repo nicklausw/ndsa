@@ -15,7 +15,13 @@ namespace NDSA {
     Sprite *ObjSprite;
     
     // DUAL SCREEN SUPPORT!
+    #ifdef DS
     NDSA_Screen SprScreen;
+    #endif
+
+    #ifdef GBA
+    OBJATTR *attr;
+    #endif
     
     // not all objects are sprites.
     bool Sprited = false;
@@ -32,7 +38,14 @@ namespace NDSA {
     void Update() {
       // Sprite.hh is unaware of the internals
       // of the object class, so we pass manually.
-      Sprites.ObjUpdate(ID, round(X), round(Y), ObjSprite, SprScreen); 
+      Sprites.ObjUpdate(ID, round(X), round(Y), ObjSprite
+      #ifdef DS
+      , SprScreen
+      #endif
+      #ifdef GBA
+      , attr
+      #endif
+      ); 
     }
 
     void addCollision(int x, int y) {
@@ -57,27 +70,37 @@ namespace NDSA {
     // parent constructors look cleaner.
     #define ParentConstructors Object::Object;
     
-    Object(Sprite *nSprite, int nX, int nY, NDSA_Screen nSprScreen)
-     :  X(nX), Y(nY), ObjSprite(nSprite), SprScreen(nSprScreen) {
+    Object(Sprite *nSprite, int nX, int nY
+    #ifdef DS
+    , NDSA_Screen nSprScreen
+    #endif
+    ) :  X(nX), Y(nY), ObjSprite(nSprite)
+    #ifdef DS
+    , SprScreen(nSprScreen)
+    #endif
+    {
       PublicID = Random.Next();
       ID = Sprites.Find_Slot();
+      #ifdef GBA
+      attr = OAM + ID;
+      #endif
       
       AddToList();
 
 
       switch(ObjSprite->SprSize) {
-        case SpriteSize_16x16: xSize = 16; ySize = 16; break;
-        case SpriteSize_16x32: xSize = 16; ySize = 32; break;
-        case SpriteSize_16x8: xSize = 16; ySize = 8; break;
-        case SpriteSize_32x16: xSize = 32; ySize = 16; break;
-        case SpriteSize_32x32: xSize = 32; ySize = 32; break;
-        case SpriteSize_32x64: xSize = 32; ySize = 64; break;
-        case SpriteSize_32x8: xSize = 32; ySize = 8; break;
-        case SpriteSize_64x32: xSize = 64; ySize = 32; break;
-        case SpriteSize_64x64: xSize = 64; ySize = 64; break;
-        case SpriteSize_8x16: xSize = 8; ySize = 16; break;
-        case SpriteSize_8x32: xSize = 8; ySize = 32; break;
-        case SpriteSize_8x8: xSize = 8; ySize = 8; break;
+        case Size_16x16: xSize = 16; ySize = 16; break;
+        case Size_16x32: xSize = 16; ySize = 32; break;
+        case Size_16x8:  xSize = 16; ySize = 8;  break;
+        case Size_32x16: xSize = 32; ySize = 16; break;
+        case Size_32x32: xSize = 32; ySize = 32; break;
+        case Size_32x64: xSize = 32; ySize = 64; break;
+        case Size_32x8:  xSize = 32; ySize = 8;  break;
+        case Size_64x32: xSize = 64; ySize = 32; break;
+        case Size_64x64: xSize = 64; ySize = 64; break;
+        case Size_8x16:  xSize = 8;  ySize = 16; break;
+        case Size_8x32:  xSize = 8;  ySize = 32; break;
+        case Size_8x8:   xSize = 8;  ySize = 8;  break;
       }
       
       Sprited = true;
@@ -92,14 +115,21 @@ namespace NDSA {
     virtual ~Object() {
       if (Sprited == true) {
         Sprites.Empty_Slot(ID);
+        #ifdef DS
         oamClear(&oamMain, ID, 1);
+        #endif
+        #ifdef GBA
+        attr->attr0 = 0;
+        attr->attr1 = 0;
+        attr->attr2 = 0;
+        #endif
       }
       if(hasCollision) Colliders.removeByInstance(this);
       Objects.removeByInstance(this);
     }
     
     void Move(Direction Dir, float Number) {
-      sassert(Sprited == true, "Movement is for sprites only");
+      if(!Sprited) Fatal("Movement is for sprites only");
       
       switch (Dir) {
         case Up: Y -= Number; break;
@@ -111,11 +141,11 @@ namespace NDSA {
         case DownLeft: X -= Number; Y += Number; break;
         case DownRight: X += Number; Y += Number; break;
       }
-
+      
       if(X < 0) X = 0;
-      else if(X > 256 - xSize) X = 256 - xSize;
+      else if(X > SCREEN_WIDTH - xSize) X = SCREEN_WIDTH - xSize;
       if(Y < 0) Y = 0;
-      else if(Y > 192 - ySize) Y = 192 - ySize;
+      else if(Y > SCREEN_HEIGHT - ySize) Y = SCREEN_HEIGHT - ySize;
       
       Update();
     }

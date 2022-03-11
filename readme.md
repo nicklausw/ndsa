@@ -1,5 +1,6 @@
 # NDSA - Nintendo DS Advanced Engine
-A project from 2016 that I'd like to bring back. It's a header library which wraps libnds functions, adds an object system, so on. If you have devkitPro installed, you should be able to clone the repo, run GNU make and have fun.
+## Write for NDS and GBA in one codebase!
+A project from 2016 that I'd like to bring back. It's a header library which wraps libnds/libgba functions, adds an object system, so on. If you have devkitPro installed, you should be able to clone the repo, run GNU make and have fun.
 
 ## Objects
 Declare an object like so:
@@ -25,7 +26,7 @@ Player *player = new Player();
 For now, use 8-bit paletted images. See [example_code](example_code) directory for examples of proper `.grit` files to go with them.
 ```c++
 #include "man.h"
-Sprite *manSprite = new Sprite(SpriteData(man), SpriteSize_32x32, SpriteColorFormat_256Color);
+Sprite *manSprite = new Sprite(SpriteData(man), Size_32x32, Colors256);
 ```
 
 ## Input

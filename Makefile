@@ -6,7 +6,19 @@ ifeq ($(strip $(DEVKITARM)),)
 $(error "Please set DEVKITARM in your environment. export DEVKITARM=<path to>devkitARM")
 endif
 
+ifndef DS
+ifndef GBA
+$(error "you must pass either GBA=1 or DS=1.")
+endif
+endif
+
+ifdef DS
 include $(DEVKITARM)/ds_rules
+endif
+
+ifdef GBA
+include $(DEVKITARM)/gba_rules
+endif
 
 #---------------------------------------------------------------------------------
 # TARGET is the name of the output
@@ -16,7 +28,12 @@ include $(DEVKITARM)/ds_rules
 #---------------------------------------------------------------------------------
 TARGET		:=	$(shell basename $(CURDIR))
 GRAPHICS	:=	example_code/images
-BUILD		:=	build
+ifdef GBA
+BUILD		:=	GBAbuild
+endif
+ifdef DS
+BUILD       :=  DSbuild
+endif
 SOURCES		:=	gfx source data example_code example_code/images
 INCLUDES	:=	include build NDSA
 TILEMAPS    :=  example_code/images
@@ -26,8 +43,13 @@ TILEMAPS    :=  example_code/images
 #---------------------------------------------------------------------------------
 ARCH	:=	-mthumb -mthumb-interwork
 
-CFLAGS	:=	-g -Wall -O2 \
- 			-march=armv5te -mtune=arm946e-s -fomit-frame-pointer\
+ifdef GBA
+CFLAGS += -mcpu=arm7tdmi -mtune=arm7tdmi -DGBA
+else
+CFLAGS += -march=armv5te -mtune=arm946e-s  -DDS
+endif
+CFLAGS	+=	-g -Wall -O2 \
+ 			-fomit-frame-pointer\
 			-ffast-math -fexceptions -Wno-unused-variable \
 			$(ARCH)
 
@@ -35,19 +57,26 @@ CFLAGS	+=	$(INCLUDE) -DARM9
 CXXFLAGS	:= $(CFLAGS) -std=c++11 -Wno-reorder
 
 ASFLAGS	:=	-g $(ARCH)
-LDFLAGS	=	-specs=ds_arm9.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
+LDFLAGS	=	-g $(ARCH) -Wl,-Map,$(notdir $*.map)
+ifdef DS
+LDFLAGS += -specs=ds_arm9.specs
+endif
 
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project
 #---------------------------------------------------------------------------------
+ifdef DS
 LIBS	:= -lnds9
+else
+LIBS    := -lgba
+endif
  
  
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
 # include and lib
 #---------------------------------------------------------------------------------
-LIBDIRS	:=	$(LIBNDS)
+LIBDIRS	:=	$(LIBNDS) $(LIBGBA)
  
 #---------------------------------------------------------------------------------
 # no real need to edit anything past this point unless you need to add additional
@@ -112,7 +141,12 @@ DEPENDS	:=	$(OFILES:.o=.d)
 #---------------------------------------------------------------------------------
 # main targets
 #---------------------------------------------------------------------------------
+ifdef DS
 $(OUTPUT).nds	: 	$(OUTPUT).elf
+endif
+ifdef GBA
+$(OUTPUT).gba   :   $(OUTPUT).elf
+endif
 $(OUTPUT).elf	:	$(OFILES)
  
 #---------------------------------------------------------------------------------

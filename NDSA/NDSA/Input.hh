@@ -1,4 +1,9 @@
 namespace NDSA {
+  extern struct KeysObj {
+    u16 keysDown;
+    u16 keysHeld;
+  } Keys;
+
   class Button {
     short int Key;
     
@@ -6,11 +11,11 @@ namespace NDSA {
     Button(int nKey) : Key(nKey) { }
     
     inline int Pressed() {
-      return keysDown() & Key;
+      return Keys.keysDown & Key;
     }
     
     inline int Held() {
-      return keysHeld() & Key;
+      return Keys.keysHeld & Key;
     }
   };
 
@@ -24,12 +29,17 @@ namespace NDSA {
            Start  {KEYPAD_BITS::KEY_START},
            Select {KEYPAD_BITS::KEY_SELECT},
            L      {KEYPAD_BITS::KEY_L},
-           R      {KEYPAD_BITS::KEY_R},
-           X      {KEYPAD_BITS::KEY_X},
+           R      {KEYPAD_BITS::KEY_R}
+           #ifdef DS
+           ,X      {KEYPAD_BITS::KEY_X},
            Y      {KEYPAD_BITS::KEY_Y},
-           Touch  {KEYPAD_BITS::KEY_TOUCH};
+           Touch  {KEYPAD_BITS::KEY_TOUCH}
+           #endif
+           ;
+
   } Buttons;
   
+  #ifdef DS
   extern class TSObj {
     touchPosition TPos;
     public:
@@ -44,4 +54,5 @@ namespace NDSA {
     inline int Raw_Y() { return TPos.rawy; }
     inline int Y()     { return TPos.py; }
   } TouchScreen;
+  #endif
 }

@@ -21,7 +21,7 @@ struct Bullet : Object {
   using ParentConstructors;
   void Step() override {
     Move(Right, 5);
-    if(X >= 256.0F - 32) {
+    if(X >= SCREEN_WIDTH - 32) {
       delete this;
     }
   }
@@ -65,7 +65,11 @@ struct Player : Object {
       yStep = 0;
     }
     if(Buttons.B.Pressed()) {
-      Bullet *b = new Bullet(bulletSpritePointer, round(X + 8), round(Y), TopScreen);
+      Bullet *b = new Bullet(bulletSpritePointer, round(X + 8), round(Y)
+                             #ifdef DS
+                             , TopScreen
+                             #endif
+                             );
       b->addCollision(8, 8);
     }
     if(Buttons.Left.Held()) {
@@ -117,35 +121,53 @@ void onPlayerEnemyCollide(Player *p, Enemy *e) {
 
 #include <NDSA/Main.hh>
 void NDSA::Game() {
-  SpriteSet *spriteSheet = new SpriteSet(SpriteData(spriteSheet), SpriteSize_32x32, SpriteColorFormat_256Color);
+  SpriteSheet *spriteSheet = new SpriteSheet(SpriteData(spriteSheet), Size_32x32, Colors256);
   Sprite *manSprite = spriteSheet->getByIndex(3);
   Sprite *enemySprite = spriteSheet->getByIndex(1);
   Sprite *bulletSprite = spriteSheet->getByIndex(2);
 
-  Background.Set(bgTileSetTiles, bgTileSetTilesLen, tileMapData, tileMapDataLength, bgTileSetPal, bgTileSetPalLen, BgSize_B8_512x512, TopScreen, true);
+  Background.Set(bgTileSetTiles, bgTileSetTilesLen, tileMapData, tileMapDataLength, bgTileSetPal, bgTileSetPalLen, BGSize_512x512,
+                 #ifdef DS
+                 TopScreen,
+                 #endif
+                 true);
 
-  Player *player = new Player(manSprite, 50, 50, TopScreen);
+  Player *player = new Player(manSprite, 50, 50
+                              #ifdef DS
+                              , TopScreen
+                              #endif
+                              );
   player->bulletSpritePointer = bulletSprite;
   player->addCollision(32, 32);
 
   onCollision<Enemy, Bullet>(onEnemyBulletCollide);
   onCollision<Player, Enemy>(onPlayerEnemyCollide);
-
-  consoleDemoInit();
-
-  Background.setScrollY(512 - 192);
+  
+  #ifdef DS
+  initConsole();
+  #endif
+  
+  Background.setScrollY(512 - SCREEN_HEIGHT);
+  #ifdef DS
 	bgUpdate();
+  #endif
 
   int frame=0;
-  while(DS.Frame()) {
+  while(System.Frame()) {
     frame++;
+    #ifdef DS
     PrintAt(0,5,"Player health: %d    ",player->health);
+    #endif
     if(frame == 250) {
-      Enemy *e = new Enemy(enemySprite, 256 + 32, 192 - 64, TopScreen);
+      Enemy *e = new Enemy(enemySprite, SCREEN_WIDTH, SCREEN_HEIGHT - 64
+                           #ifdef DS
+                           , TopScreen
+                           #endif
+                           );
       e->addCollision(24, 32);
       frame = 0;
     }
-    if(Buttons.X.Held()) {
+    if(Buttons.L.Held()) {
       emptyObject *o = new emptyObject();
     }
     if(Buttons.B.Pressed()) {
@@ -164,6 +186,8 @@ void NDSA::Game() {
           player->Update();
           player->yStatus = idle;
         }
+    #ifdef DS
     PrintAt(0,2,"# of objects: %d    ",Objects.count);
+    #endif
   }
 }

@@ -3,11 +3,11 @@
 #define SCREEN(x,y) "\x1b["#y";"#x"H"
 #define PrintAt(x,y,str,...) printf(SCREEN(x,y) str, ##__VA_ARGS__)
 
-#include <nds.h>
 #include <ctime>
 #include <cmath>
 #include <cstdio>
 #include <cstdarg>
+#include <cstring>
 
 #include <typeinfo>
 
@@ -27,11 +27,36 @@ typedef const unsigned short MapData;
 typedef const unsigned short PaletteData;
 
 namespace NDSA {
-  inline void Fatal(const char *s,...) {
+  inline void Fatal(const char*,...);
+}
+
+#ifdef DS
+#include <nds.h>
+#define SCREEN_WIDTH 256
+#define SCREEN_HEIGHT 192
+#endif
+
+#ifdef GBA
+#include <gba.h>
+#include <NDSA/GBA.hh>
+#endif
+
+namespace NDSA {
+  inline void initConsole() {
     consoleDemoInit();
+    #ifdef GBA
+    // black background
+    BG_PALETTE[0] = 0;
+    BGCTRL[0] = BG_16_COLOR | SCREEN_BASE(4);
+    BG_OFFSET[0].x = 0; BG_OFFSET[0].y = 0;
+    #endif
+  }
+  
+  inline void Fatal(const char *s,...) {
+    initConsole();
     va_list argptr;
     va_start(argptr,s);
-    fprintf(stdout, SCREEN(0,10) "ERROR: ");
+    fprintf(stdout, SCREEN(0,9) "ERROR: ");
     vfprintf(stdout, s, argptr);
     va_end(argptr);
     while(1);
@@ -52,7 +77,14 @@ namespace NDSA {
   }
 }
 
-#include <NDSA/Screen.hh>
+#ifdef DS
+namespace NDSA {
+  enum NDSA_Screen {
+    TopScreen, BottomScreen
+  };
+}
+#endif
+
 #include <NDSA/Input.hh>
 #include <NDSA/Random.hh>
 #include <NDSA/Background.hh>
@@ -64,6 +96,7 @@ namespace NDSA {
   
   struct {
     void Initialize() {
+      #ifdef DS
       videoSetMode(MODE_0_2D);
       videoSetModeSub(MODE_0_2D);
       
@@ -77,20 +110,37 @@ namespace NDSA {
       #ifdef NDSA_AUDIO
         mmInitDefaultMem( (mm_addr)mmsolution_bin );
       #endif
+      #endif
+
+      #ifdef GBA
+      irqInit();
+      irqEnable(IRQ_VBLANK);
+      REG_IME = 1; // interrupts on
+      SetMode( OBJ_ON | BG0_ON );
+      #endif
       
       Random.Seed();
     }
     
     bool Frame() {
+      #ifdef DS
       swiWaitForVBlank();
-      
-      scanKeys();
       
       TouchScreen.Update();
       
       oamUpdate(&oamMain);
       oamUpdate(&oamSub);
-      
+      #endif
+
+      #ifdef GBA
+      setRepeat(1, 1);
+      VBlankIntrWait();
+      #endif
+
+      scanKeys();
+      Keys.keysDown = keysDown();
+      Keys.keysHeld = keysHeld();
+
       // run through object code. the list can change as we go along.
       // so we only run the current set of objects from the start of frame.
       PointerList<Object> currentObjects = Objects.getCopy();
@@ -130,5 +180,5 @@ namespace NDSA {
       
       return true;
     }
-  } DS;
+  } System;
 }
