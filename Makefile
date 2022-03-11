@@ -26,12 +26,17 @@ endif
 # SOURCES is a list of directories containing source code
 # INCLUDES is a list of directories containing extra header files
 #---------------------------------------------------------------------------------
-TARGET		:=	$(shell basename $(CURDIR))
+ifdef GBA
+ext := "_GBA"
+else
+ext := "_NDS"
+endif
+
+TARGET		:=	$(shell basename $(CURDIR))$(ext)
 GRAPHICS	:=	example_code/images
 ifdef GBA
 BUILD		:=	GBAbuild
-endif
-ifdef DS
+else
 BUILD       :=  DSbuild
 endif
 SOURCES		:=	gfx source data example_code example_code/images
