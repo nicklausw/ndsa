@@ -9,17 +9,17 @@ namespace NDSA {
 
   enum SpriteDimensions {
     Size_8x8,
-		Size_16x16,
-		Size_32x32,
-		Size_64x64,
-		Size_16x8,
-		Size_32x8,
-		Size_32x16,
-		Size_64x32,
-		Size_8x16,
-		Size_8x32,
-		Size_16x32,
-		Size_32x64
+    Size_16x16,
+    Size_32x32,
+    Size_64x64,
+    Size_16x8,
+    Size_32x8,
+    Size_32x16,
+    Size_64x32,
+    Size_8x16,
+    Size_8x32,
+    Size_16x32,
+    Size_32x64
   };
 
   struct Sprite {
