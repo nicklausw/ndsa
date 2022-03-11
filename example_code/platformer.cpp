@@ -174,18 +174,18 @@ void NDSA::Game() {
       PointerList<emptyObject> l = Objects.getByType<emptyObject>();
       l.deleteAll();
     }
-        Object *o = player;
-        float collisionXtop = (o->X / 8.0) - (Background.getScrollX() / 8.0);
-        float collisionYtop = (o->Y / 8.0) + (Background.getScrollY() / 8.0);
-        float collisionXbottom = ((o->X + o->width) / 8.0) - (Background.getScrollX() / 8.0);
-        float collisionYbottom = ((o->Y + o->height) / 8.0) + (Background.getScrollY() / 8.0);
-        int collisionNumTop = tileMapData[((int)floor(collisionYtop) * (512 / 8)) + (int)collisionXtop];
-        int collisionNumBottom = tileMapData[((int)floor(collisionYbottom) * (512 / 8)) + (int)collisionXbottom];
-        if((collisionNumTop || collisionNumBottom) && player->yROC < 0) {
-          player->Y = floor(player->Y / 8) * 8;
-          player->Update();
-          player->yStatus = idle;
-        }
+    Object *o = player;
+    float collisionXtop = (o->X / 8.0) - (Background.getScrollX() / 8.0);
+    float collisionYtop = (o->Y / 8.0) + (Background.getScrollY() / 8.0);
+    float collisionXbottom = ((o->X + o->width) / 8.0) - (Background.getScrollX() / 8.0);
+    float collisionYbottom = ((o->Y + o->height) / 8.0) + (Background.getScrollY() / 8.0);
+    int collisionNumTop = tileMapData[((int)floor(collisionYtop) * (512 / 8)) + (int)collisionXtop];
+    int collisionNumBottom = tileMapData[((int)floor(collisionYbottom) * (512 / 8)) + (int)collisionXbottom];
+    if((collisionNumTop || collisionNumBottom) && player->yROC < 0) {
+      player->Y = floor(player->Y / 8) * 8;
+      player->Update();
+      player->yStatus = idle;
+    }
     #ifdef DS
     PrintAt(0,2,"# of objects: %d    ",Objects.count);
     #endif

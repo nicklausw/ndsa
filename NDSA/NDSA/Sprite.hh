@@ -25,6 +25,7 @@ namespace NDSA {
   struct Sprite {
     #ifdef GBA
     int tileOffset = 0;
+    int tileX = 0, tileY = 0;
     #endif
 
     #ifdef DS
@@ -83,7 +84,6 @@ namespace NDSA {
       #endif
 
       #ifdef GBA
-      int tileX = 0, tileY = 0;
       switch(nSprSize) {
         case Size_16x16: tileX = 2; tileY = 2; break;
         case Size_16x32: tileX = 2; tileY = 4; break;
@@ -110,6 +110,9 @@ namespace NDSA {
       #ifdef DS
       oamFreeGfx(&oamMain, Graphics);
       oamFreeGfx(&oamSub, GraphicsSub);
+      #endif
+      #ifdef GBA
+      GBATiles.free(tileOffset / 2, tileX, tileY);
       #endif
     }
   };

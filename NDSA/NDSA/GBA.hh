@@ -44,5 +44,17 @@ namespace NDSA {
       Fatal("Could not allocate tiles.");
       return -1;
     }
+
+    void free(int tileOffset, int tileX, int tileY) {
+      int x = tileOffset;
+      int y = tileOffset;
+      while(x >= 16) x -= 16;
+      y /= 16;
+      for(int c = x; c < x + tileX; c++) {
+        for(int d = y; d < y + tileY; d++) {
+          openTiles[c][d] = false;
+        }
+      }
+    }
   } GBATiles;
 }
