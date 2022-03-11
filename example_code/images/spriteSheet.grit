@@ -2,3 +2,4 @@
 -gu8  # all output as bytes
 -Mh4  # metatile width of 4 tiles
 -Mw4  # metatile height of 4 tiles
+-fh!  # no header file

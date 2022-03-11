@@ -26,6 +26,18 @@ typedef const unsigned char TileData;
 typedef const unsigned short MapData;
 typedef const unsigned short PaletteData;
 
+#define includeTilemap(x) \
+  extern const short unsigned int x ## Data[]; \
+  extern const unsigned long x ## DataLength;
+
+#define includeGraphics(x) \
+  extern const unsigned int   x ## TilesLen; \
+  extern const unsigned int   x ## MapLen; \
+  extern const unsigned int   x ## PalLen; \
+  extern const unsigned char  x ## Tiles[]; \
+  extern const unsigned short  x ## Map[]; \
+  extern const unsigned short  x ## Pal[];
+
 namespace NDSA {
   inline void Fatal(const char*,...);
 }

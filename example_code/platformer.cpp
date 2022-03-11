@@ -1,7 +1,7 @@
 #include <NDSA.hh>
 using namespace NDSA;
 
-#include "tileMap.h"
+includeTilemap(tileMap);
 
 enum Status {
   idle,
@@ -104,8 +104,9 @@ struct emptyObject : Object {
   using ParentConstructors;
 };
 
-#include "spriteSheet.h"
-#include "bgTileSet.h"
+
+includeGraphics(bgTileSet);
+includeGraphics(spriteSheet);
 
 void onEnemyBulletCollide(Enemy *p, Bullet *b) {
   Objects.deleteByInstance<Enemy>(&p);

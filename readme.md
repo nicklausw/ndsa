@@ -1,6 +1,6 @@
 # NDSA - Nintendo DS Advanced Engine
 ## Write for NDS and GBA in one codebase!
-A project from 2016 that I'd like to bring back. It's a header library which wraps libnds/libgba functions, adds an object system, so on. If you have devkitPro installed, you should be able to clone the repo, run GNU make and have fun.
+A project from 2016 that I'd like to bring back. It's a header library which wraps libnds/libgba functions, adds an object system, so on. NOTE: Requires [gritn](https://github.com/nicklausw/gritn). Other than that, if you have devkitPro installed, you should be able to clone the repo, run GNU make and have fun.
 
 ## Objects
 Declare an object like so:
