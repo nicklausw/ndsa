@@ -21,7 +21,7 @@ struct Bullet : Object {
   using ParentConstructors;
   void Step() override {
     Move(Right, 10);
-    if(X >= SCREEN_WIDTH - 32) {
+    if(X >= SCREEN_WIDTH - xDeadSpace() - width) {
       delete this;
     }
   }
@@ -31,7 +31,7 @@ struct Enemy : Object {
   using ParentConstructors;
   void Step() override {
     Move(Left, .5);
-    if(X <= 0.0F) {
+    if(X - xDeadSpace() <= 0.0F) {
       delete this;
     }
   }

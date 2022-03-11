@@ -63,6 +63,16 @@ namespace NDSA {
     int xSize = 0, ySize = 0;
     int width = 0, height = 0;
 
+    // returns the unused pixels on the object's sides.
+    inline int xDeadSpace() {
+      return (xSize - width) / 2;
+    }
+
+    // returns the unused pixels on the object's top and bottom.
+    inline int yDeadSpace() {
+      return (ySize - height) / 2;
+    }
+
     // all objects have code run each frame.
     virtual void Step() { }
 
@@ -142,10 +152,10 @@ namespace NDSA {
         case DownRight: X += Number; Y += Number; break;
       }
       
-      if(X < 0) X = 0;
-      else if(X > SCREEN_WIDTH - xSize) X = SCREEN_WIDTH - xSize;
-      if(Y < 0) Y = 0;
-      else if(Y > SCREEN_HEIGHT - ySize) Y = SCREEN_HEIGHT - ySize;
+      if(X - xDeadSpace() < 0) X = 0 - xDeadSpace();
+      else if(X + xSize - xDeadSpace() > SCREEN_WIDTH) X = SCREEN_WIDTH - width - xDeadSpace();
+      if(Y - yDeadSpace() < 0) Y = 0 - yDeadSpace();
+      else if(Y + ySize - yDeadSpace() > SCREEN_HEIGHT) Y = SCREEN_HEIGHT - height - yDeadSpace();
       
       Update();
     }
