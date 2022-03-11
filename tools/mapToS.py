@@ -42,7 +42,7 @@ counter = 0
 for num in data:
   if counter == 0:
     output += ".hword "
-  output += str(num - smallestInt)
+  output += "0x{:02X}".format(num - smallestInt)
   counter += 1
   if counter == 16:
     output += "\n"
