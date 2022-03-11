@@ -163,7 +163,7 @@ $(OUTPUT).elf	:	$(OFILES)
 	$(bin2o)
 
 %.s %.h: %.tmx
-	@echo $<
+	@echo $(notdir $<)
 	@../tools/mapToS.py $< $(notdir $(subst .tmx,.s,$<) $(subst .tmx,.h,$<))
 
 
@@ -175,7 +175,7 @@ $(OUTPUT).elf	:	$(OFILES)
 #---------------------------------------------------------------------------------
 %.s %.h: %.png %.grit
 #---------------------------------------------------------------------------------
-	grit $< -fts -o$*
+	@grit $< -fts -o$*
 
 -include $(DEPENDS)
  
