@@ -16,6 +16,7 @@ namespace NDSA {
   SpritesObj Sprites;
   CollisionEventList CollisionEvents;
   KeysObj Keys;
+  SystemObj System;
 }
 
 int main() {

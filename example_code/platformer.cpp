@@ -100,11 +100,6 @@ struct Player : Object {
   }
 };
 
-struct emptyObject : Object {
-  using ParentConstructors;
-};
-
-
 includeGraphics(bgTileSet);
 includeGraphics(spriteSheet);
 
@@ -167,13 +162,6 @@ void NDSA::Game() {
                            );
       e->addCollision(24, 32);
       frame = 0;
-    }
-    if(Buttons.L.Held()) {
-      emptyObject *o = new emptyObject();
-    }
-    if(Buttons.B.Pressed()) {
-      PointerList<emptyObject> l = Objects.getByType<emptyObject>();
-      l.deleteAll();
     }
     Object *o = player;
     float collisionXtop = (o->X / 8.0) - (Background.getScrollX() / 8.0);

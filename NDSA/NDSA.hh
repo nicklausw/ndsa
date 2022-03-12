@@ -106,7 +106,7 @@ namespace NDSA {
 namespace NDSA {
   extern void Game();
   
-  struct {
+  extern struct SystemObj {
     void Initialize() {
       #ifdef DS
       videoSetMode(MODE_0_2D);

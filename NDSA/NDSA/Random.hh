@@ -1,11 +1,7 @@
 namespace NDSA {
-  extern class RandomObj {
-    bool Seeded = false;
-    
-    public:
+  extern struct RandomObj {
     void Seed() {
       srand(time(0));
-      Seeded = true;
     }
     
     // C style randomness.

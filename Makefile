@@ -56,7 +56,7 @@ CFLAGS += -march=armv5te -mtune=arm946e-s  -DDS
 endif
 CFLAGS	+=	-g -Wall -O2 \
  			-fomit-frame-pointer\
-			-ffast-math -fexceptions -Wno-unused-variable \
+			-ffast-math -fexceptions \
 			$(ARCH)
 
 CFLAGS	+=	$(INCLUDE) -DARM9
@@ -176,6 +176,7 @@ $(OUTPUT).elf	:	$(OFILES)
 #---------------------------------------------------------------------------------
 %.s %.h: %.png %.grit
 #---------------------------------------------------------------------------------
+	@echo $(notdir $<)
 	@gritn $< -fts -o$*
 
 -include $(DEPENDS)
