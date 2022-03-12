@@ -77,6 +77,7 @@ namespace NDSA {
       int pointer = BGScreen == TopScreen ? BGData : BGDataSub;
       if(unsortedMap) {
         dmaCopy(newMap, bgGetMapPtr(pointer), MapLen);
+        free(newMap);
       } else {
         dmaCopy(Map, bgGetMapPtr(pointer), MapLen);
       }
@@ -90,6 +91,7 @@ namespace NDSA {
       BGCTRL[0] = SCREEN_BASE(30) | BG_256_COLOR | BG_SIZE_3;
       if(unsortedMap) {
         dmaCopy((void*)newMap, MAP_BASE_ADR(30), MapLen);
+        free(newMap);
       } else {
         dmaCopy((void*)Map, MAP_BASE_ADR(30), MapLen);
       }
