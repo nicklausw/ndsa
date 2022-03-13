@@ -219,7 +219,7 @@ namespace NDSA {
         case Size_64x64: size = 64 * 64; break;
         case Size_64x32: size = 64 * 32; break;
         case Size_32x64: size = 32 * 64; break;
-        }
+      }
       int dataSize = TileLen / size;
       for(int c = 0; c < dataSize; c++) {
         Sprite *s = new Sprite(Tiles, size, (c == dataSize - 1 ? Palette : 0), PalLen, nSprSize, nColorFormat);
