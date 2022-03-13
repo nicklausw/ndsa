@@ -58,7 +58,7 @@ namespace NDSA {
     // a unique random number for every instance.
     long PublicID;
 
-    float X, Y;
+    float X = 0, Y = 0;
 
     int xSize = 0, ySize = 0;
     int width = 0, height = 0;
@@ -84,7 +84,7 @@ namespace NDSA {
     #ifdef DS
     , NDSA_Screen nSprScreen
     #endif
-    ) :  X(nX), Y(nY), ObjSprite(nSprite)
+    ) : ObjSprite(nSprite), X(nX), Y(nY)
     #ifdef DS
     , SprScreen(nSprScreen)
     #endif

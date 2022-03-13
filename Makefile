@@ -60,7 +60,7 @@ CFLAGS	+=	-g -Wall -O2 \
 			$(ARCH)
 
 CFLAGS	+=	$(INCLUDE) -DARM9
-CXXFLAGS	:= $(CFLAGS) -std=c++11 -Wno-reorder
+CXXFLAGS	:= $(CFLAGS) -std=c++11
 
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-g $(ARCH) -Wl,-Map,$(notdir $*.map)
