@@ -31,11 +31,12 @@ namespace NDSA {
       updateScroll();
     }
     
-    #define BackgroundData(x) x ## Tiles, x ## TilesLen, x ## Map, x ## MapLen, x ## Pal, x ## PalLen
+    #define BackgroundData(x) x ## Tiles, x ## TilesLen, x ## Pal, x ## PalLen
+    #define MapData(x) x ## Data, x ## DataLength
     
     void Set(TileData *Tiles, int TilesLen, 
-             MapData *Map, int MapLen,
              PaletteData *Palette, int PaletteLen,
+             MapData *Map, int MapLen,
              BackgroundSize bgSize
              #ifdef DS
              , NDSA_Screen BGScreen = TopScreen

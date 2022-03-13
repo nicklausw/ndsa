@@ -122,7 +122,7 @@ void NDSA::Game() {
   Sprite *enemySprite = spriteSheet->getByIndex(1);
   Sprite *bulletSprite = spriteSheet->getByIndex(2);
 
-  Background.Set(BackgroundData(bgTileSet), BGSize_512x512
+  Background.Set(BackgroundData(bgTileSet), MapData(tileMap), BGSize_512x512
                  #ifdef DS
                  , TopScreen
                  #endif
