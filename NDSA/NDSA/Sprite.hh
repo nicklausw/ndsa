@@ -205,11 +205,26 @@ namespace NDSA {
     public:
     SpriteSheet(TileData *Tiles, int TileLen, PaletteData *Palette, int PalLen,
      SpriteDimensions nSprSize, ColorFormat nColorFormat) {
-      int dataSize = TileLen / 1024;
+      int size = 0;
+      switch(nSprSize) {
+        case Size_8x8:   size = 8 * 8;   break;
+        case Size_16x8:  size = 16 * 8;  break;
+        case Size_8x16:  size = 8 * 16;  break;
+        case Size_16x16: size = 16 * 16; break;
+        case Size_32x8:  size = 32 * 8;  break;
+        case Size_8x32:  size = 8 * 32;  break;
+        case Size_32x32: size = 32 * 32; break;
+        case Size_32x16: size = 32 * 16; break;
+        case Size_16x32: size = 16 * 32; break;
+        case Size_64x64: size = 64 * 64; break;
+        case Size_64x32: size = 64 * 32; break;
+        case Size_32x64: size = 32 * 64; break;
+        }
+      int dataSize = TileLen / size;
       for(int c = 0; c < dataSize; c++) {
-        Sprite *s = new Sprite(Tiles, 1024, (c == dataSize - 1 ? Palette : 0), PalLen, nSprSize, nColorFormat);
+        Sprite *s = new Sprite(Tiles, size, (c == dataSize - 1 ? Palette : 0), PalLen, nSprSize, nColorFormat);
         add(s);
-        Tiles += 1024;
+        Tiles += size;
       }
     }
   };
