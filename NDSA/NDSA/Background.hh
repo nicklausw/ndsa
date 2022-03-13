@@ -32,7 +32,7 @@ namespace NDSA {
     }
     
     #define BackgroundData(x) x ## Tiles, x ## TilesLen, x ## Pal, x ## PalLen
-    #define MapData(x) x ## Data, x ## DataLength
+    #define MapData(x) x ## Map, x ## MapLen
     
     void Set(TileData *Tiles, int TilesLen, 
              PaletteData *Palette, int PaletteLen,

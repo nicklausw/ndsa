@@ -1,4 +1,5 @@
 -gB8  # bit depth: 8
 -gu8  # all output as bytes
 -mRt  # reduce unique tiles
+-m!   # NOTE: remove if this is a background w/o external tilemap
 -fh!  # no header file

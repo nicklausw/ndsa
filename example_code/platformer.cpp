@@ -1,8 +1,6 @@
 #include <NDSA.hh>
 using namespace NDSA;
 
-includeTilemap(tileMap);
-
 enum Status {
   idle,
   falling,
@@ -100,8 +98,9 @@ struct Player : Object {
   }
 };
 
-includeGraphics(bgTileSet);
-includeGraphics(spriteSheet);
+includeTiles(bgTileSet);
+includeTiles(spriteSheet);
+includeMap(tileMap);
 
 void onEnemyBulletCollide(Enemy *p, Bullet *b) {
   Objects.deleteByInstance<Enemy>(&p);
@@ -164,6 +163,7 @@ void NDSA::Game() {
       frame = 0;
     }
     Object *o = player;
+    const MapData* tileMapData = tileMapMap;
     float collisionXtop = (o->X / 8.0) - (Background.getScrollX() / 8.0);
     float collisionYtop = (o->Y / 8.0) + (Background.getScrollY() / 8.0);
     float collisionXbottom = ((o->X + o->width) / 8.0) - (Background.getScrollX() / 8.0);

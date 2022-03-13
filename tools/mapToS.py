@@ -7,7 +7,7 @@ if len(sys.argv) != 3:
   sys.exit(1)
 count = 0
 head, tail = os.path.split(sys.argv[1])
-variableName = tail.removesuffix(".tmx") + "Data"
+variableName = tail.removesuffix(".tmx")
 
 rawData = []
 smallestInt = 100000
@@ -40,12 +40,12 @@ output = (
   "@ data size = " + str(count * 2 + 4) + " bytes\n\n"
   ".section .rodata\n"
   ".align 4\n\n"
-  ".global " + variableName + "Length\n"
-  ".hidden " + variableName + "Length\n"
-  + variableName + "Length:\n"
+  ".global " + variableName + "MapLen\n"
+  ".hidden " + variableName + "MapLen\n"
+  + variableName + "MapLen:\n"
   ".long " + "0x{:08X}".format(count * 2) + "\n\n"
-  ".global " + variableName + "\n"
-  ".hidden " + variableName + "\n" + variableName + ":\n"
+  ".global " + variableName + "Map\n"
+  ".hidden " + variableName + "Map\n" + variableName + "Map:\n"
 )
 
 listWidth = int(rawWidth / 32)
