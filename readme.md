@@ -23,10 +23,16 @@ Player *player = new Player();
 ```
 
 ## Sprites
-For now, use 8-bit paletted images. See [example_code](example_code) directory for examples of proper `.grit` files to go with them.
+For now, use 8-bit paletted images. See [example_code/images](example_code/images) directory for examples of proper `.grit` files to go with them.
 ```c++
-#include "man.h"
+includeTiles(man);
 Sprite *manSprite = new Sprite(SpriteData(man), Size_32x32, Colors256);
+```
+### Spritesheets
+```c++
+includeTiles(spriteSheet);
+SpriteSheet *spriteSheet = new SpriteSheet(SpriteData(spriteSheet), Size_32x32, Colors256);
+Sprite *manSprite = spriteSheet->getByIndex(3);
 ```
 
 ## Input
@@ -41,8 +47,9 @@ if(Buttons.A.Pressed()) {
 ## Backgrounds
 Same deal as sprites; use 8-bit paletted images.
 ```c++
-#include "testImage.h"
-Background.Set(BackgroundData(testImage), TopScreen);
+includeTiles(bg);
+includeMap(bg); // this can be from bg.png or bg.tmx (tilemap)
+Background.Set(BackgroundData(bg), MapData(bg), TopScreen);
 ```
 
 ## Random Numbers
@@ -56,7 +63,7 @@ Use this in favor of your own `int main`:
 ```c++
 #include <NDSA/Main.hh>
 void NDSA::Game() {
-  while(DS.Frame()) {
+  while(System.Frame()) {
     // this code runs once every frame
   }
 }
