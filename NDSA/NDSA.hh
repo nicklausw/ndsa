@@ -36,6 +36,9 @@ typedef const unsigned short PaletteData;
   extern const unsigned char  x ## Tiles[]; \
   extern const unsigned short  x ## Pal[];
 
+#define TileData(x) x ## Tiles, x ## TilesLen, x ## Pal, x ## PalLen
+#define MapData(x) x ## Map, x ## MapLen
+
 namespace NDSA {
   inline void Fatal(const char*,...);
 }

@@ -31,9 +31,6 @@ namespace NDSA {
       updateScroll();
     }
     
-    #define BackgroundData(x) x ## Tiles, x ## TilesLen, x ## Pal, x ## PalLen
-    #define MapData(x) x ## Map, x ## MapLen
-    
     void Set(TileData *Tiles, int TilesLen, 
              PaletteData *Palette, int PaletteLen,
              MapData *Map, int MapLen,

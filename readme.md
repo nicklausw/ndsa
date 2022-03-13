@@ -26,12 +26,12 @@ Player *player = new Player();
 For now, use 8-bit paletted images. See [example_code/images](example_code/images) directory for examples of proper `.grit` files to go with them.
 ```c++
 includeTiles(man);
-Sprite *manSprite = new Sprite(SpriteData(man), Size_32x32, Colors256);
+Sprite *manSprite = new Sprite(TileData(man), Size_32x32, Colors256);
 ```
 ### Spritesheets
 ```c++
 includeTiles(spriteSheet);
-SpriteSheet *spriteSheet = new SpriteSheet(SpriteData(spriteSheet), Size_32x32, Colors256);
+SpriteSheet *spriteSheet = new SpriteSheet(TileData(spriteSheet), Size_32x32, Colors256);
 Sprite *manSprite = spriteSheet->getByIndex(3);
 ```
 
@@ -49,7 +49,7 @@ Same deal as sprites; use 8-bit paletted images.
 ```c++
 includeTiles(bg);
 includeMap(bg); // this can be from bg.png or bg.tmx (tilemap)
-Background.Set(BackgroundData(bg), MapData(bg), TopScreen);
+Background.Set(TileData(bg), MapData(bg), TopScreen);
 ```
 
 ## Random Numbers

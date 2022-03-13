@@ -116,12 +116,12 @@ void onPlayerEnemyCollide(Player *p, Enemy *e) {
 
 #include <NDSA/Main.hh>
 void NDSA::Game() {
-  SpriteSheet *spriteSheet = new SpriteSheet(SpriteData(spriteSheet), Size_32x32, Colors256);
+  SpriteSheet *spriteSheet = new SpriteSheet(TileData(spriteSheet), Size_32x32, Colors256);
   Sprite *manSprite = spriteSheet->getByIndex(3);
   Sprite *enemySprite = spriteSheet->getByIndex(1);
   Sprite *bulletSprite = spriteSheet->getByIndex(2);
 
-  Background.Set(BackgroundData(bgTileSet), MapData(tileMap), BGSize_512x512
+  Background.Set(TileData(bgTileSet), MapData(tileMap), BGSize_512x512
                  #ifdef DS
                  , TopScreen
                  #endif
