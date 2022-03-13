@@ -122,11 +122,11 @@ void NDSA::Game() {
   Sprite *enemySprite = spriteSheet->getByIndex(1);
   Sprite *bulletSprite = spriteSheet->getByIndex(2);
 
-  Background.Set(bgTileSetTiles, bgTileSetTilesLen, tileMapData, tileMapDataLength, bgTileSetPal, bgTileSetPalLen, BGSize_512x512,
+  Background.Set(BackgroundData(bgTileSet), BGSize_512x512
                  #ifdef DS
-                 TopScreen,
+                 , TopScreen
                  #endif
-                 true);
+                 );
 
   Player *player = new Player(manSprite, 50, 50
                               #ifdef DS
